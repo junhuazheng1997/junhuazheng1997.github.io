@@ -6,13 +6,17 @@
   <meta name="renderer" content="webkit">
   <meta http-equiv="X-UA-Compatible" content="IE=edge" >
   <link rel="dns-prefetch" href="https://junhuazheng.com">
-  <title>Archives | 韭菜之光的博客</title>
+  <title>初探unsafe | 韭菜之光的博客</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta property="og:type" content="website">
-<meta property="og:title" content="韭菜之光的博客">
-<meta property="og:url" content="https://junhuazheng.com/archives/index.html">
+  <meta name="description" content="前言： 关于Unsafe的描述，并且在进行实际使用的尝试">
+<meta property="og:type" content="article">
+<meta property="og:title" content="初探unsafe">
+<meta property="og:url" content="https://junhuazheng.com/sun-misc-unsafe/multi/sun.misc.Unsafe/index.html">
 <meta property="og:site_name" content="韭菜之光的博客">
+<meta property="og:description" content="前言： 关于Unsafe的描述，并且在进行实际使用的尝试">
 <meta property="og:locale" content="en_US">
+<meta property="article:published_time" content="2020-09-15T09:41:04.387Z">
+<meta property="article:modified_time" content="2020-09-16T06:03:11.333Z">
 <meta property="article:author" content="Junhua Zheng">
 <meta name="twitter:card" content="summary">
   
@@ -134,413 +138,213 @@
             <canvas data-colors="#eaeaea" data-sectionHeight="100" data-contentId="js-content" id="myCanvas1" class="anm-canvas"></canvas>
           </div>
           <div id="js-content" class="content-ll">
-            
-  
-  
+            <article id="post-multi/sun.misc.Unsafe" class="article article-type-post " itemscope itemprop="blogPost">
+  <div class="article-inner">
     
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      初探unsafe
+    </h1>
+  
+
+        
+        <a href="/sun-misc-unsafe/multi/sun.misc.Unsafe/" class="archive-article-date">
+  	<time datetime="2020-09-15T09:41:04.387Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-09-15</time>
+</a>
+        
+      </header>
     
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>前言：</p>
+<p>关于Unsafe的描述，并且在进行实际使用的尝试</p>
+<a id="more"></a>
+
+<h2 id="sun-misc-Unsafe"><a href="#sun-misc-Unsafe" class="headerlink" title="sun.misc.Unsafe"></a>sun.misc.Unsafe</h2><h4 id="一、类的介绍"><a href="#一、类的介绍" class="headerlink" title="一、类的介绍"></a>一、类的介绍</h4><p>先来看看这个类是怎么介绍自己的</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line">A collection of methods <span class="keyword">for</span> performing low-level, unsafe operations.</span><br><span class="line"><span class="comment">// 用于执行底层、非安全操作的方法集合</span></span><br><span class="line">    </span><br><span class="line">Although the <span class="class"><span class="keyword">class</span> <span class="title">and</span> <span class="title">all</span> <span class="title">methods</span> <span class="title">are</span> <span class="title">public</span>, <span class="title">use</span> <span class="title">of</span> <span class="title">this</span> <span class="title">class</span> <span class="title">is</span> <span class="title">limited</span> <span class="title">because</span> <span class="title">only</span> <span class="title">trusted</span> <span class="title">code</span> <span class="title">can</span> <span class="title">obtain</span> <span class="title">instances</span> <span class="title">of</span> <span class="title">it</span>.</span></span><br><span class="line"><span class="class">// 虽然类和类中的所有方法都是<span class="title">pulbic</span>的，但这个类的使用被限制，只有被信任的代码可以获得这个类的实例对象</span></span><br><span class="line"><span class="class">    </span></span><br><span class="line"><span class="class"><span class="title">It</span> <span class="title">is</span> <span class="title">the</span> <span class="title">resposibility</span> <span class="title">of</span> <span class="title">the</span> <span class="title">caller</span> <span class="title">to</span> <span class="title">make</span> <span class="title">sure</span> <span class="title">arguments</span> <span class="title">are</span> <span class="title">checked</span> <span class="title">before</span> <span class="title">methods</span> <span class="title">of</span> <span class="title">this</span> <span class="title">class</span> <span class="title">are</span> <span class="title">called</span>.</span></span><br><span class="line"><span class="class">// 调用方在调用这个方法之前需要确保该方法的参数经过检查</span></span><br><span class="line"><span class="class"></span></span><br><span class="line"><span class="class"><span class="title">While</span> <span class="title">some</span> <span class="title">rudimentary</span> <span class="title">checks</span> <span class="title">are</span> <span class="title">performed</span> <span class="title">on</span> <span class="title">the</span> <span class="title">input</span>,<span class="title">the</span> <span class="title">checks</span> <span class="title">are</span> <span class="title">best</span> <span class="title">effort</span> <span class="title">and</span> <span class="title">when</span> <span class="title">performance</span> <span class="title">is</span> <span class="title">an</span> <span class="title">overriding</span> <span class="title">priority</span>, <span class="title">as</span> <span class="title">when</span> <span class="title">methods</span> <span class="title">of</span> <span class="title">this</span> <span class="title">class</span> <span class="title">are</span> <span class="title">optimized</span> <span class="title">by</span> <span class="title">the</span> <span class="title">runtime</span> <span class="title">compiler</span>, <span class="title">some</span> <span class="title">or</span> <span class="title">all</span> <span class="title">checks</span> (<span class="title">if</span> <span class="title">any</span>) <span class="title">may</span> <span class="title">be</span> <span class="title">elided</span>. </span></span><br><span class="line"><span class="class">// 性能优先时，最高效的方式是执行一些基本检查即可。</span></span><br><span class="line"><span class="class">// 比如，编译器在优化该类的方法时，部分或全部检查有可能会忽略</span></span><br><span class="line"><span class="class">    </span></span><br><span class="line"><span class="class"><span class="title">Hence</span>,<span class="title">the</span> <span class="title">caller</span> <span class="title">must</span> <span class="title">not</span> <span class="title">rely</span> <span class="title">on</span> <span class="title">the</span> <span class="title">checks</span> <span class="title">and</span> <span class="title">corresponding</span> <span class="title">exceptions</span>!</span></span><br><span class="line"><span class="class">// 因此在调用该类方法的时候，无法通过检查及相应的异常来确保该类方法的安全</span></span><br><span class="line"><span class="class"></span></span><br><span class="line"><span class="class"><span class="title">public</span> <span class="title">final</span> <span class="title">class</span> <span class="title">Unsafe</span> </span>&#123;&#125;</span><br></pre></td></tr></table></figure>
+
+
+
+<h4 id="二、类的获取"><a href="#二、类的获取" class="headerlink" title="二、类的获取"></a>二、类的获取</h4><h5 id="1、注册到methodFilterMap"><a href="#1、注册到methodFilterMap" class="headerlink" title="1、注册到methodFilterMap"></a>1、注册到<em>methodFilterMap</em></h5><p>1.1、</p>
+<ul>
+<li>Unsafe被加载 调用该注册方法</li>
+</ul>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">static</span> &#123;</span><br><span class="line">	Reflection.registerMethodsToFilter(Unsafe.class, <span class="string">&quot;getUnsafe&quot;</span>);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+
+
+<p>1.2、</p>
+<ul>
+<li><p>其实注册就是将*<strong>Unsafe.class**<em>和</em></strong>“getUnsafe”<strong><em>放入到</em></strong>Reflection.methodFilterMap***中</p>
+</li>
+<li><p>其中**<em>fieldFilterMap**</em>内存放的实VM的内部对象</p>
+</li>
+<li><p>这两个map为**<em>hashMap**</em></p>
+</li>
+</ul>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">synchronized</span> <span class="keyword">void</span> <span class="title">registerMethodsToFilter</span><span class="params">(Class&lt;?&gt; containingClass,</span></span></span><br><span class="line"><span class="function"><span class="params">                                                        String ... methodNames)</span> </span>&#123;</span><br><span class="line">methodFilterMap =</span><br><span class="line">		registerFilter(methodFilterMap, containingClass, methodNames);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">volatile</span> Map&lt;Class&lt;?&gt;,String[]&gt; fieldFilterMap;</span><br><span class="line"><span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">volatile</span> Map&lt;Class&lt;?&gt;,String[]&gt; methodFilterMap;</span><br><span class="line"></span><br><span class="line"><span class="keyword">static</span> &#123;</span><br><span class="line">    Map&lt;Class&lt;?&gt;,String[]&gt; map = <span class="keyword">new</span> HashMap&lt;Class&lt;?&gt;,String[]&gt;();</span><br><span class="line">    map.put(Reflection.class,</span><br><span class="line">        <span class="keyword">new</span> String[] &#123;<span class="string">&quot;fieldFilterMap&quot;</span>, <span class="string">&quot;methodFilterMap&quot;</span>&#125;);</span><br><span class="line">    map.put(System.class, <span class="keyword">new</span> String[] &#123;<span class="string">&quot;security&quot;</span>&#125;);</span><br><span class="line">    map.put(Class.class, <span class="keyword">new</span> String[] &#123;<span class="string">&quot;classLoader&quot;</span>&#125;);</span><br><span class="line">    fieldFilterMap = map;</span><br><span class="line">    methodFilterMap = <span class="keyword">new</span> HashMap&lt;&gt;();</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+
+
+<h5 id="2、获取"><a href="#2、获取" class="headerlink" title="2、获取"></a>2、获取</h5><p>2.1、**<em>getUnsafe()**</em></p>
+<ul>
+<li>首先通过**<em>getCallerClass()**</em>这个本地方法获得调用方法的Class（Class.forName（）同样有这种方式）</li>
+<li>检查该方法的调用方的<strong>类加载器与启动类加载器是否相同</strong></li>
+<li>从这段代码可以看出，一般情况下，我们调用getUnsafe()只会得到”Unsafe”的报错信息</li>
+</ul>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@CallerSensitive</span></span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">static</span> Unsafe <span class="title">getUnsafe</span><span class="params">()</span> </span>&#123;</span><br><span class="line">    Class&lt;?&gt; caller = Reflection.getCallerClass();</span><br><span class="line">    <span class="keyword">if</span> (!VM.isSystemDomainLoader(caller.getClassLoader()))</span><br><span class="line">        <span class="keyword">throw</span> <span class="keyword">new</span> SecurityException(<span class="string">&quot;Unsafe&quot;</span>);</span><br><span class="line">    <span class="keyword">return</span> theUnsafe;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+
+
+<p>2.2、**<em>Class.getDeclaredField(“theUnsafe”)**</em>  从本类所有字段中获取</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">Field theUnsafe = Unsafe.class.getDeclaredField(<span class="string">&quot;theUnsafe&quot;</span>);</span><br><span class="line">theUnsafe.setAccessible(<span class="keyword">false</span>); <span class="comment">// 跳过检查</span></span><br><span class="line">Unsafe unsafe = (Unsafe) theUnsafe.get(<span class="keyword">null</span>);</span><br></pre></td></tr></table></figure>
+
+
+
+<p>2.3、**<em>Class.getDeclaredField(“theUnsafe”)**</em>升级版01</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">final</span> Unsate THE_UNSAFE;</span><br><span class="line"></span><br><span class="line"><span class="keyword">static</span> &#123;</span><br><span class="line">    <span class="keyword">try</span> &#123;</span><br><span class="line">        <span class="keyword">final</span> PrivilegedExceptionAction&lt;Unsafe&gt; action = </span><br><span class="line">            <span class="keyword">new</span> PrivilegedExceptionAction&lt;Unsafe&gt;() &#123;</span><br><span class="line">          <span class="keyword">public</span> theUnsafe = 		Unsafe.class.getDeclaredField(<span class="string">&quot;theUnsafe&quot;</span>);</span><br><span class="line">            theUnsafe.setAccessible(<span class="keyword">true</span>);</span><br><span class="line">            <span class="keyword">return</span> (Unsafe) theUnsafe.get(<span class="keyword">null</span>);</span><br><span class="line">        &#125;;</span><br><span class="line">        THE_UNSAFE = AccessController.doPrivileged(action);</span><br><span class="line">    &#125; <span class="keyword">catch</span> (Execption e) &#123;</span><br><span class="line">        <span class="function">thow new <span class="title">RuntimeException</span><span class="params">(<span class="string">&quot;Unable to load unsafe&quot;</span>, e)</span></span>;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+
+
+<p>2.4 、**<em>Class.getDeclaredField(“theUnsafe”)**</em>升级版02 Google版</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">final</span> Unsafe THE_UNSAFE = getUnsafe();</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">private</span> <span class="keyword">static</span> Unsafe <span class="title">getUnsafe</span><span class="params">()</span> </span>&#123;</span><br><span class="line">    <span class="keyword">try</span> &#123;</span><br><span class="line">        <span class="keyword">return</span> Unsafe.getUnsafe();</span><br><span class="line">    &#125; <span class="keyword">catch</span> (SecurityException truReflectionInstead) &#123;&#125;</span><br><span class="line">    </span><br><span class="line">    <span class="keyword">try</span> &#123;</span><br><span class="line">        <span class="keyword">return</span> AccessController.doPrivileged(</span><br><span class="line">            (PrivilegedExceptionAction&lt;Unsafe&gt;) () -&gt; &#123;</span><br><span class="line">                Class&lt;Unsafe&gt; k = Unsafe.class;</span><br><span class="line">                <span class="keyword">for</span> (Field f : k.getDeclaredFields()) &#123;</span><br><span class="line">                    f.setAccessible(<span class="keyword">true</span>);</span><br><span class="line">                    Object x = f.get(<span class="keyword">null</span>);</span><br><span class="line">                    <span class="keyword">if</span> (k.isInstance(x)) &#123;</span><br><span class="line">                        <span class="keyword">return</span> k.cast(x);</span><br><span class="line">                    &#125;</span><br><span class="line">                &#125;</span><br><span class="line">                <span class="keyword">throw</span> <span class="keyword">new</span> NoSuchFieldError(<span class="string">&quot;the Unsafe&quot;</span>);</span><br><span class="line">            &#125;</span><br><span class="line">        );</span><br><span class="line">    &#125; <span class="keyword">catch</span> (PrivilegedActionException e) &#123;</span><br><span class="line">        <span class="keyword">throw</span> <span class="keyword">new</span> RuntimeException(<span class="string">&quot;Could not initialize intrinsics&quot;</span>, e.getCause());</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+
+
+<p>*<strong>目前暂时没有办法使用unsafe，以上方法均无法获取到unsafe实例</strong></p>
+
+      
+
       
       
-      <section class="archives-wrap">
-        <div class="archive-year-wrap">
-          <a href="/archives/2020" class="archive-year">2020</a>
-        </div>
-        <div class="archives">
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/JVM/jvm/%E5%88%9D%E6%8E%A2%E5%AF%B9%E8%B1%A1/" class="archive-article-date">
-  	<time datetime="2020-09-16T03:06:39.384Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-09-16</time>
-</a>
-        </div>
-    	 
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/JVM/jvm/%E5%88%9D%E6%8E%A2%E5%AF%B9%E8%B1%A1/">JVM--对象</a>
-    </h1>
-  
-
-        <div class="article-info info-on-right">
-          
-          
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+      
 	<div class="article-category tagcloud">
 		<i class="icon-book icon"></i>
 		<ul class="article-tag-list">
 			 
         		<li class="article-tag-list-item">
-        			<a href="/categories/JVM//" class="article-tag-list-link color4">JVM</a>
+        			<a href="/categories/sun-misc-unsafe//" class="article-tag-list-link color1">sun.misc.unsafe</a>
         		</li>
       		
 		</ul>
 	</div>
 
 
+      
+
+      
+        
+<div class="share-btn share-icons tooltip-left">
+  <div class="tooltip tooltip-east">
+    <span class="tooltip-item">
+      <a href="javascript:;" class="share-sns share-outer">
+        <i class="icon icon-share"></i>
+      </a>
+    </span>
+    <span class="tooltip-content">
+      <div class="share-wrap">
+        <div class="share-icons">
+          <a class="weibo share-sns" href="javascript:;" data-type="weibo">
+            <i class="icon icon-weibo"></i>
+          </a>
+          <a class="weixin share-sns wxFab" href="javascript:;" data-type="weixin">
+            <i class="icon icon-weixin"></i>
+          </a>
+          <a class="qq share-sns" href="javascript:;" data-type="qq">
+            <i class="icon icon-qq"></i>
+          </a>
+          <a class="douban share-sns" href="javascript:;" data-type="douban">
+            <i class="icon icon-douban"></i>
+          </a>
+          <a class="qzone share-sns" href="javascript:;" data-type="qzone">
+            <i class="icon icon-qzone"></i>
+          </a>
+          <a class="facebook share-sns" href="javascript:;" data-type="facebook">
+            <i class="icon icon-facebook"></i>
+          </a>
+          <a class="twitter share-sns" href="javascript:;" data-type="twitter">
+            <i class="icon icon-twitter"></i>
+          </a>
+          <a class="google share-sns" href="javascript:;" data-type="google">
+            <i class="icon icon-google"></i>
+          </a>
         </div>
-        <div class="clearfix"></div>
-    </header>
+      </div>
+    </span>
+  </div>
+</div>
+
+<div class="page-modal wx-share js-wx-box">
+    <a class="close js-modal-close" href="javascript:;"><i class="icon icon-close"></i></a>
+    <p>扫一扫，分享到微信</p>
+    <div class="wx-qrcode">
+      <img src="//pan.baidu.com/share/qrcode?url=https://junhuazheng.com/sun-misc-unsafe/multi/sun.misc.Unsafe/" alt="微信分享二维码">
+    </div>
+</div>
+
+<div class="mask js-mask"></div>
+      
+      <div class="clearfix"></div>
+    </div>
   </div>
 </article>
+
   
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/docker/docker/Dockerfile/" class="archive-article-date">
-  	<time datetime="2020-09-15T09:41:10.543Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-09-15</time>
-</a>
+<nav id="article-nav">
+  
+    <a href="/uncategorized/multi/%E9%97%AE%E9%A2%98%E8%AE%B0%E5%BD%95/" id="article-nav-newer" class="article-nav-link-wrap">
+      <i class="icon-circle-left"></i>
+      <div class="article-nav-title">
+        
+          问题随记
+        
+      </div>
+    </a>
+  
+  
+    <a href="/python/multi/notes_python/" id="article-nav-older" class="article-nav-link-wrap">
+      <div class="article-nav-title">python的基本使用</div>
+      <i class="icon-circle-right"></i>
+    </a>
+  
+</nav>
+
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
         </div>
-    	 
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/docker/docker/Dockerfile/">Dokerfile实战</a>
-    </h1>
-  
-
-        <div class="article-info info-on-right">
-          
-          
-	<div class="article-category tagcloud">
-		<i class="icon-book icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="/categories/docker//" class="article-tag-list-link color2">docker</a>
-        		</li>
-      		
-		</ul>
-	</div>
+        
+        
+    </div>
+</aside>
 
 
-        </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
+
   
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/%E7%AE%97%E6%B3%95%E4%B8%8E%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%E4%B8%8E%E7%AE%97%E6%B3%95/%E7%AE%97%E6%B3%95/" class="archive-article-date">
-  	<time datetime="2020-09-15T09:41:04.568Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-09-15</time>
-</a>
-        </div>
-    	 
   
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/%E7%AE%97%E6%B3%95%E4%B8%8E%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%E4%B8%8E%E7%AE%97%E6%B3%95/%E7%AE%97%E6%B3%95/">算法与数据结构</a>
-    </h1>
   
 
-        <div class="article-info info-on-right">
-          
-          
-	<div class="article-category tagcloud">
-		<i class="icon-book icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="/categories/算法与数据结构//" class="article-tag-list-link color3">算法与数据结构</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-
-        </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
-  
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/%E5%9B%9E%E9%A1%BE%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/" class="archive-article-date">
-  	<time datetime="2020-09-15T09:41:04.556Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-09-15</time>
-</a>
-        </div>
-    	 
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/%E5%9B%9E%E9%A1%BE%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/">设计模式回顾与突破</a>
-    </h1>
   
 
-        <div class="article-info info-on-right">
-          
-          
-	<div class="article-category tagcloud">
-		<i class="icon-book icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="/categories/设计模式//" class="article-tag-list-link color5">设计模式</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-
-        </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
-  
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/%E5%A4%9A%E7%BA%BF%E7%A8%8B/%E5%A4%9A%E7%BA%BF%E7%A8%8B/%E5%A4%9A%E7%BA%BF%E7%A8%8B%E5%9F%BA%E7%A1%80/" class="archive-article-date">
-  	<time datetime="2020-09-15T09:41:04.545Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-09-15</time>
-</a>
-        </div>
-    	 
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/%E5%A4%9A%E7%BA%BF%E7%A8%8B/%E5%A4%9A%E7%BA%BF%E7%A8%8B/%E5%A4%9A%E7%BA%BF%E7%A8%8B%E5%9F%BA%E7%A1%80/">多线程--AQS与JUC</a>
-    </h1>
   
 
-        <div class="article-info info-on-right">
-          
-          
-	<div class="article-category tagcloud">
-		<i class="icon-book icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="/categories/多线程//" class="article-tag-list-link color4">多线程</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-
-        </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
-  
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/zookeeper/zookeeper/Zookeeper/" class="archive-article-date">
-  	<time datetime="2020-09-15T09:41:04.533Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-09-15</time>
-</a>
-        </div>
-    	 
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/zookeeper/zookeeper/Zookeeper/">zk的基本概念</a>
-    </h1>
-  
-
-        <div class="article-info info-on-right">
-          
-          
-	<div class="article-category tagcloud">
-		<i class="icon-book icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="/categories/zookeeper//" class="article-tag-list-link color5">zookeeper</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-
-        </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
-  
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/springcloud/spring/SpringCloud/" class="archive-article-date">
-  	<time datetime="2020-09-15T09:41:04.522Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-09-15</time>
-</a>
-        </div>
-    	 
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/springcloud/spring/SpringCloud/">springcloud问题随记</a>
-    </h1>
-  
-
-        <div class="article-info info-on-right">
-          
-          
-	<div class="article-category tagcloud">
-		<i class="icon-book icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="/categories/springcloud//" class="article-tag-list-link color2">springcloud</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-
-        </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
-  
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/spring/spring/Spring/" class="archive-article-date">
-  	<time datetime="2020-09-15T09:41:04.510Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-09-15</time>
-</a>
-        </div>
-    	 
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/spring/spring/Spring/">spring问题随记</a>
-    </h1>
-  
-
-        <div class="article-info info-on-right">
-          
-          
-	<div class="article-category tagcloud">
-		<i class="icon-book icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="/categories/spring//" class="article-tag-list-link color2">spring</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-
-        </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
-  
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/rpc/JMS/rpc/rpc%E6%A6%82%E8%BF%B0%E4%B8%8EJMS/" class="archive-article-date">
-  	<time datetime="2020-09-15T09:41:04.454Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-09-15</time>
-</a>
-        </div>
-    	 
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/rpc/JMS/rpc/rpc%E6%A6%82%E8%BF%B0%E4%B8%8EJMS/">rpc概述与JMS</a>
-    </h1>
-  
-
-        <div class="article-info info-on-right">
-          
-          
-	<div class="article-category tagcloud">
-		<i class="icon-book icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="/categories/rpc//" class="article-tag-list-link color4">rpc</a>
-        		</li>
-      		 
-        		<li class="article-tag-list-item">
-        			<a href="/categories/rpc/JMS//" class="article-tag-list-link color4">JMS</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-
-        </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
-  
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/mongodb/nosql/nosql/MongoDB%E5%9F%BA%E7%A1%80/" class="archive-article-date">
-  	<time datetime="2020-09-15T09:41:04.438Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-09-15</time>
-</a>
-        </div>
-    	 
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/mongodb/nosql/nosql/MongoDB%E5%9F%BA%E7%A1%80/">mongodb的部署及基本概念</a>
-    </h1>
-  
-
-        <div class="article-info info-on-right">
-          
-          
-	<div class="article-category tagcloud">
-		<i class="icon-book icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="/categories/mongodb//" class="article-tag-list-link color3">mongodb</a>
-        		</li>
-      		 
-        		<li class="article-tag-list-item">
-        			<a href="/categories/mongodb/nosql//" class="article-tag-list-link color1">nosql</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-
-        </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
-  
-  
-    </div></section>
-  
-
-    
-    <nav id="page-nav">
-      <span class="page-number current">1</span><a class="page-number" href="/archives/page/2/">2</a><a class="page-number" href="/archives/page/3/">3</a><a class="extend next" rel="next" href="/archives/page/2/">Next &amp;raquo;</a>
-    </nav>
   
 
 
@@ -564,8 +368,8 @@
 	var yiliaConfig = {
 		mathjax: false,
 		isHome: false,
-		isPost: false,
-		isArchive: true,
+		isPost: true,
+		isArchive: false,
 		isTag: false,
 		isCategory: false,
 		open_in_new: false,

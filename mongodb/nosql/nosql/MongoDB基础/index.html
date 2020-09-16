@@ -6,15 +6,25 @@
   <meta name="renderer" content="webkit">
   <meta http-equiv="X-UA-Compatible" content="IE=edge" >
   <link rel="dns-prefetch" href="https://junhuazheng.com">
-  <title>Archives | 韭菜之光的博客</title>
+  <title>mongodb的部署及基本概念 | 韭菜之光的博客</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta property="og:type" content="website">
-<meta property="og:title" content="韭菜之光的博客">
-<meta property="og:url" content="https://junhuazheng.com/archives/index.html">
+  <meta name="description" content="前言： 主要是MongoDB的docker方式部署以及一些基本使用">
+<meta property="og:type" content="article">
+<meta property="og:title" content="mongodb的部署及基本概念">
+<meta property="og:url" content="https://junhuazheng.com/mongodb/nosql/nosql/MongoDB%E5%9F%BA%E7%A1%80/index.html">
 <meta property="og:site_name" content="韭菜之光的博客">
+<meta property="og:description" content="前言： 主要是MongoDB的docker方式部署以及一些基本使用">
 <meta property="og:locale" content="en_US">
+<meta property="og:image" content="http://118.24.235.151/group1/M00/00/00/rB4AA179STaASYKNAACRv52fZXs100.png">
+<meta property="og:image" content="http://118.24.235.151/group1/M00/00/00/rB4AA179SfiASQAGAAAsD6H71NY182.png">
+<meta property="og:image" content="http://118.24.235.151/group1/M00/00/00/rB4AA179SoSAXO61AAA4_siexYU589.png">
+<meta property="og:image" content="http://118.24.235.151/group1/M00/00/00/rB4AA179T2KABK0iAADv8U3qF6w376.png">
+<meta property="og:image" content="http://118.24.235.151/group1/M00/00/00/rB4AA179UBSAC2QOAAAJKi8WVhg785.png">
+<meta property="article:published_time" content="2020-09-15T09:41:04.438Z">
+<meta property="article:modified_time" content="2020-09-16T06:34:37.808Z">
 <meta property="article:author" content="Junhua Zheng">
 <meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="http://118.24.235.151/group1/M00/00/00/rB4AA179STaASYKNAACRv52fZXs100.png">
   
   
     <link rel="icon" href="/favicon.png">
@@ -134,383 +144,89 @@
             <canvas data-colors="#eaeaea" data-sectionHeight="100" data-contentId="js-content" id="myCanvas1" class="anm-canvas"></canvas>
           </div>
           <div id="js-content" class="content-ll">
-            
-  
-  
+            <article id="post-nosql/MongoDB基础" class="article article-type-post " itemscope itemprop="blogPost">
+  <div class="article-inner">
     
-    
-      
-      
-      <section class="archives-wrap">
-        <div class="archive-year-wrap">
-          <a href="/archives/2020" class="archive-year">2020</a>
-        </div>
-        <div class="archives">
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/JVM/jvm/%E5%88%9D%E6%8E%A2%E5%AF%B9%E8%B1%A1/" class="archive-article-date">
-  	<time datetime="2020-09-16T03:06:39.384Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-09-16</time>
-</a>
-        </div>
-    	 
+      <header class="article-header">
+        
   
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/JVM/jvm/%E5%88%9D%E6%8E%A2%E5%AF%B9%E8%B1%A1/">JVM--对象</a>
+    <h1 class="article-title" itemprop="name">
+      mongodb的部署及基本概念
     </h1>
   
 
-        <div class="article-info info-on-right">
-          
-          
-	<div class="article-category tagcloud">
-		<i class="icon-book icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="/categories/JVM//" class="article-tag-list-link color4">JVM</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-
-        </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
-  
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/docker/docker/Dockerfile/" class="archive-article-date">
-  	<time datetime="2020-09-15T09:41:10.543Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-09-15</time>
-</a>
-        </div>
-    	 
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/docker/docker/Dockerfile/">Dokerfile实战</a>
-    </h1>
-  
-
-        <div class="article-info info-on-right">
-          
-          
-	<div class="article-category tagcloud">
-		<i class="icon-book icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="/categories/docker//" class="article-tag-list-link color2">docker</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-
-        </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
-  
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/%E7%AE%97%E6%B3%95%E4%B8%8E%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%E4%B8%8E%E7%AE%97%E6%B3%95/%E7%AE%97%E6%B3%95/" class="archive-article-date">
-  	<time datetime="2020-09-15T09:41:04.568Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-09-15</time>
-</a>
-        </div>
-    	 
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/%E7%AE%97%E6%B3%95%E4%B8%8E%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%E4%B8%8E%E7%AE%97%E6%B3%95/%E7%AE%97%E6%B3%95/">算法与数据结构</a>
-    </h1>
-  
-
-        <div class="article-info info-on-right">
-          
-          
-	<div class="article-category tagcloud">
-		<i class="icon-book icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="/categories/算法与数据结构//" class="article-tag-list-link color3">算法与数据结构</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-
-        </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
-  
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/%E5%9B%9E%E9%A1%BE%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/" class="archive-article-date">
-  	<time datetime="2020-09-15T09:41:04.556Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-09-15</time>
-</a>
-        </div>
-    	 
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/%E5%9B%9E%E9%A1%BE%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/">设计模式回顾与突破</a>
-    </h1>
-  
-
-        <div class="article-info info-on-right">
-          
-          
-	<div class="article-category tagcloud">
-		<i class="icon-book icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="/categories/设计模式//" class="article-tag-list-link color5">设计模式</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-
-        </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
-  
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/%E5%A4%9A%E7%BA%BF%E7%A8%8B/%E5%A4%9A%E7%BA%BF%E7%A8%8B/%E5%A4%9A%E7%BA%BF%E7%A8%8B%E5%9F%BA%E7%A1%80/" class="archive-article-date">
-  	<time datetime="2020-09-15T09:41:04.545Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-09-15</time>
-</a>
-        </div>
-    	 
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/%E5%A4%9A%E7%BA%BF%E7%A8%8B/%E5%A4%9A%E7%BA%BF%E7%A8%8B/%E5%A4%9A%E7%BA%BF%E7%A8%8B%E5%9F%BA%E7%A1%80/">多线程--AQS与JUC</a>
-    </h1>
-  
-
-        <div class="article-info info-on-right">
-          
-          
-	<div class="article-category tagcloud">
-		<i class="icon-book icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="/categories/多线程//" class="article-tag-list-link color4">多线程</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-
-        </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
-  
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/zookeeper/zookeeper/Zookeeper/" class="archive-article-date">
-  	<time datetime="2020-09-15T09:41:04.533Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-09-15</time>
-</a>
-        </div>
-    	 
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/zookeeper/zookeeper/Zookeeper/">zk的基本概念</a>
-    </h1>
-  
-
-        <div class="article-info info-on-right">
-          
-          
-	<div class="article-category tagcloud">
-		<i class="icon-book icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="/categories/zookeeper//" class="article-tag-list-link color5">zookeeper</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-
-        </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
-  
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/springcloud/spring/SpringCloud/" class="archive-article-date">
-  	<time datetime="2020-09-15T09:41:04.522Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-09-15</time>
-</a>
-        </div>
-    	 
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/springcloud/spring/SpringCloud/">springcloud问题随记</a>
-    </h1>
-  
-
-        <div class="article-info info-on-right">
-          
-          
-	<div class="article-category tagcloud">
-		<i class="icon-book icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="/categories/springcloud//" class="article-tag-list-link color2">springcloud</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-
-        </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
-  
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/spring/spring/Spring/" class="archive-article-date">
-  	<time datetime="2020-09-15T09:41:04.510Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-09-15</time>
-</a>
-        </div>
-    	 
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/spring/spring/Spring/">spring问题随记</a>
-    </h1>
-  
-
-        <div class="article-info info-on-right">
-          
-          
-	<div class="article-category tagcloud">
-		<i class="icon-book icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="/categories/spring//" class="article-tag-list-link color2">spring</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-
-        </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
-  
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/rpc/JMS/rpc/rpc%E6%A6%82%E8%BF%B0%E4%B8%8EJMS/" class="archive-article-date">
-  	<time datetime="2020-09-15T09:41:04.454Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-09-15</time>
-</a>
-        </div>
-    	 
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/rpc/JMS/rpc/rpc%E6%A6%82%E8%BF%B0%E4%B8%8EJMS/">rpc概述与JMS</a>
-    </h1>
-  
-
-        <div class="article-info info-on-right">
-          
-          
-	<div class="article-category tagcloud">
-		<i class="icon-book icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="/categories/rpc//" class="article-tag-list-link color4">rpc</a>
-        		</li>
-      		 
-        		<li class="article-tag-list-item">
-        			<a href="/categories/rpc/JMS//" class="article-tag-list-link color4">JMS</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-
-        </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
-  
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/mongodb/nosql/nosql/MongoDB%E5%9F%BA%E7%A1%80/" class="archive-article-date">
+        
+        <a href="/mongodb/nosql/nosql/MongoDB%E5%9F%BA%E7%A1%80/" class="archive-article-date">
   	<time datetime="2020-09-15T09:41:04.438Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-09-15</time>
 </a>
-        </div>
-    	 
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/mongodb/nosql/nosql/MongoDB%E5%9F%BA%E7%A1%80/">mongodb的部署及基本概念</a>
-    </h1>
-  
+        
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>前言：</p>
+<p>主要是MongoDB的docker方式部署以及一些基本使用</p>
+<a id="more"></a>
 
-        <div class="article-info info-on-right">
-          
-          
+
+
+
+
+<h1 id="MongoDB基础"><a href="#MongoDB基础" class="headerlink" title="MongoDB基础"></a>MongoDB基础</h1><p>MongoDB是由C++编写的，基于分布式文件存储的开源数据库系统。</p>
+<p>面向文档存储，类似于JSON对象。字段值可以包含其他文档，数组及其他文档数组：</p>
+<figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">&#123;</span><br><span class="line">    name : &quot;kris&quot;,</span><br><span class="line">    age : 23,</span><br><span class="line">    status : &quot;A&quot;</span><br><span class="line">    groups : [&quot;good&quot;, &quot;man&quot;]</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+
+
+<h2 id="docker-搭建-mongo"><a href="#docker-搭建-mongo" class="headerlink" title="docker 搭建 mongo"></a>docker 搭建 mongo</h2><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">docker search mongo</span><br><span class="line">docker pull mongo # 最新官方镜像</span><br><span class="line">docker inspect mongo # 查看官方镜像</span><br></pre></td></tr></table></figure>
+
+<p>1、查看镜像信息</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">docker inspect mongo</span><br></pre></td></tr></table></figure>
+
+<p><img src="http://118.24.235.151/group1/M00/00/00/rB4AA179STaASYKNAACRv52fZXs100.png"></p>
+<p>2、运行容器</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#</span><span class="bash"> 使用host的 27017 端口</span></span><br><span class="line">docker run -d --name=mongodb --net=host -v /data/mongo:/data/db mongo</span><br><span class="line"></span><br><span class="line"><span class="meta">#</span><span class="bash"> 设置容器自动重启</span></span><br><span class="line">docker update --restart=always mongodb</span><br></pre></td></tr></table></figure>
+
+<p><img src="http://118.24.235.151/group1/M00/00/00/rB4AA179SfiASQAGAAAsD6H71NY182.png"></p>
+<p>3、进入容器</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">docker exec -it mongodb /bin/bash</span><br><span class="line"></span><br><span class="line">mongo -version</span><br><span class="line"></span><br><span class="line">mongo # 本地连接 可以加地址端口</span><br></pre></td></tr></table></figure>
+
+<p><img src="http://118.24.235.151/group1/M00/00/00/rB4AA179SoSAXO61AAA4_siexYU589.png"></p>
+<p><img src="http://118.24.235.151/group1/M00/00/00/rB4AA179T2KABK0iAADv8U3qF6w376.png"></p>
+<p>至此，mongodb 搭建成功。</p>
+<h2 id="基本概念"><a href="#基本概念" class="headerlink" title="基本概念"></a>基本概念</h2><p><img src="http://118.24.235.151/group1/M00/00/00/rB4AA179UBSAC2QOAAAJKi8WVhg785.png"></p>
+<p><strong>admin</strong>：存储MongoDb的用户、角色等信息。添加进admin的用户自动继承所有数据库的权限，还可以运行一些特定服务端命令。</p>
+<p><strong>local</strong>：主要存储副本集的元数据，如副本集的配置信息、oplog信息，内容不会同步到副本集里其他节点，。</p>
+<p><strong>config</strong>：主要用于分片集群，当Mongo用于分片设置时，config数据库在内部使用，用于保存分片的相关信息。</p>
+<h2 id="shell"><a href="#shell" class="headerlink" title="shell"></a>shell</h2><h3 id="数据库与集合"><a href="#数据库与集合" class="headerlink" title="数据库与集合"></a>数据库与集合</h3><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br></pre></td><td class="code"><pre><span class="line">docker exec -it mongodb /bin/bash # 进入芒果容器</span><br><span class="line"></span><br><span class="line">mongo # 登录芒果</span><br><span class="line"></span><br><span class="line">show dbs # 查看数据库 仅仅展示包含数据的</span><br><span class="line"></span><br><span class="line">use 数据库名 # 使用/创建 数据库</span><br><span class="line"></span><br><span class="line">db.dropDatabase() # 删除数据库</span><br><span class="line"></span><br><span class="line"><span class="meta">#</span><span class="bash"> 例子1</span></span><br><span class="line">use kris</span><br><span class="line">show dbs</span><br><span class="line">db.kris.insert(&#123;&quot;name&quot;:&quot;Superman&quot;&#125;)</span><br><span class="line">show collections # kris</span><br><span class="line">db.dropDatabase()</span><br><span class="line"></span><br><span class="line">db.createCollection(&quot;kirs&quot;) # 创建名为kris的集合</span><br><span class="line">db.kris.drop() # 删除集合</span><br><span class="line"></span><br><span class="line"><span class="meta">#</span><span class="bash"> 创建集合</span></span><br><span class="line"><span class="meta">#</span><span class="bash"> capped 当size达到最大值覆盖最早的文档 必须指定size</span></span><br><span class="line"><span class="meta">#</span><span class="bash"> size 集合最大值 单位KB</span></span><br><span class="line"><span class="meta">#</span><span class="bash"> max 固定集合中包含文档的最大数值</span></span><br><span class="line">db.createCollection(&quot;demo&quot;, &#123;</span><br><span class="line">&quot;capped&quot;:true,&quot;size&quot;:1024,&quot;max&quot;:1000</span><br><span class="line">&#125;)</span><br><span class="line"></span><br><span class="line"><span class="meta">#</span><span class="bash"> 例子2</span></span><br><span class="line">use kris</span><br><span class="line">db.createCollection(&quot;demo&quot;, &#123;</span><br><span class="line">&quot;capped&quot;:true,&quot;size&quot;:1024,&quot;max&quot;:1000</span><br><span class="line">&#125;)</span><br><span class="line">show collections # demo</span><br><span class="line">db.demo.insert(&#123;&quot;name&quot;:&quot;kris&quot;, &quot;address&quot;:&quot;广州&quot;&#125;)</span><br><span class="line">db.demo.drop()</span><br></pre></td></tr></table></figure>
+
+
+
+<h3 id="文档"><a href="#文档" class="headerlink" title="文档"></a>文档</h3><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br></pre></td><td class="code"><pre><span class="line">use demo</span><br><span class="line"></span><br><span class="line"><span class="meta">#</span><span class="bash"> 创建名为car的集合</span></span><br><span class="line">db.createCollection(&quot;car&quot;,&#123;&quot;capped&quot;:true,&quot;size&quot;:888&#125;)</span><br><span class="line"></span><br><span class="line">show tables # car</span><br><span class="line"></span><br><span class="line"><span class="meta">#</span><span class="bash"> save() 若指定_id 存在则会更新</span></span><br><span class="line">db.car.save(&#123;厂家:&quot;奥迪&quot;&#125;)</span><br><span class="line"></span><br><span class="line"><span class="meta">#</span><span class="bash"> insert() 若指定_id 存在则抛出异常</span></span><br><span class="line">db.car.insert(&#123;厂家:&quot;奔驰&quot;&#125;)</span><br><span class="line"></span><br><span class="line">db.car.insertOne(</span><br><span class="line">	&#123;&#125;,</span><br><span class="line">	&#123;</span><br><span class="line">	writeConcern: 1 # 写入策略 默认为1 要求确认写操作</span><br><span class="line">	&#125;</span><br><span class="line">)</span><br><span class="line"></span><br><span class="line">db.car.insertMany(</span><br><span class="line">	[&#123;&#125;,&#123;&#125;,&#123;&#125;...],</span><br><span class="line">	&#123;</span><br><span class="line">	ordered: true # 是否按顺序插入 默认为true</span><br><span class="line">	&#125;</span><br><span class="line">)</span><br><span class="line"></span><br><span class="line"><span class="meta">#</span><span class="bash"> 例子1</span></span><br><span class="line">use demo</span><br><span class="line">db.createCollection(&quot;car&quot;)</span><br><span class="line"></span><br><span class="line">var document = &#123;&quot;厂家&quot;:&quot;奥迪&quot;&#125;;</span><br><span class="line">db.demo.insert(&#123;名称:&quot;奥迪A6L&quot;,厂家:document&#125;)</span><br><span class="line">db.demo.find() # 查询所有已插入数据</span><br><span class="line">db.demo.find(_id) # 可以直接根据_id查询</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+      
+
+      
+      
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+      
 	<div class="article-category tagcloud">
 		<i class="icon-book icon"></i>
 		<ul class="article-tag-list">
@@ -527,20 +243,112 @@
 	</div>
 
 
+      
+
+      
+        
+<div class="share-btn share-icons tooltip-left">
+  <div class="tooltip tooltip-east">
+    <span class="tooltip-item">
+      <a href="javascript:;" class="share-sns share-outer">
+        <i class="icon icon-share"></i>
+      </a>
+    </span>
+    <span class="tooltip-content">
+      <div class="share-wrap">
+        <div class="share-icons">
+          <a class="weibo share-sns" href="javascript:;" data-type="weibo">
+            <i class="icon icon-weibo"></i>
+          </a>
+          <a class="weixin share-sns wxFab" href="javascript:;" data-type="weixin">
+            <i class="icon icon-weixin"></i>
+          </a>
+          <a class="qq share-sns" href="javascript:;" data-type="qq">
+            <i class="icon icon-qq"></i>
+          </a>
+          <a class="douban share-sns" href="javascript:;" data-type="douban">
+            <i class="icon icon-douban"></i>
+          </a>
+          <a class="qzone share-sns" href="javascript:;" data-type="qzone">
+            <i class="icon icon-qzone"></i>
+          </a>
+          <a class="facebook share-sns" href="javascript:;" data-type="facebook">
+            <i class="icon icon-facebook"></i>
+          </a>
+          <a class="twitter share-sns" href="javascript:;" data-type="twitter">
+            <i class="icon icon-twitter"></i>
+          </a>
+          <a class="google share-sns" href="javascript:;" data-type="google">
+            <i class="icon icon-google"></i>
+          </a>
         </div>
-        <div class="clearfix"></div>
-    </header>
+      </div>
+    </span>
+  </div>
+</div>
+
+<div class="page-modal wx-share js-wx-box">
+    <a class="close js-modal-close" href="javascript:;"><i class="icon icon-close"></i></a>
+    <p>扫一扫，分享到微信</p>
+    <div class="wx-qrcode">
+      <img src="//pan.baidu.com/share/qrcode?url=https://junhuazheng.com/mongodb/nosql/nosql/MongoDB%E5%9F%BA%E7%A1%80/" alt="微信分享二维码">
+    </div>
+</div>
+
+<div class="mask js-mask"></div>
+      
+      <div class="clearfix"></div>
+    </div>
   </div>
 </article>
+
+  
+<nav id="article-nav">
+  
+    <a href="/rpc/JMS/rpc/rpc%E6%A6%82%E8%BF%B0%E4%B8%8EJMS/" id="article-nav-newer" class="article-nav-link-wrap">
+      <i class="icon-circle-left"></i>
+      <div class="article-nav-title">
+        
+          rpc概述与JMS
+        
+      </div>
+    </a>
   
   
-    </div></section>
+    <a href="/mysql/mysql/%E9%AB%98%E6%80%A7%E8%83%BDMySQL%E5%AD%A6%E4%B9%A0%E8%AE%B0%E5%BD%95/" id="article-nav-older" class="article-nav-link-wrap">
+      <div class="article-nav-title">高性能mysql学习笔记</div>
+      <i class="icon-circle-right"></i>
+    </a>
+  
+</nav>
+
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
+  
+  
   
 
-    
-    <nav id="page-nav">
-      <span class="page-number current">1</span><a class="page-number" href="/archives/page/2/">2</a><a class="page-number" href="/archives/page/3/">3</a><a class="extend next" rel="next" href="/archives/page/2/">Next &amp;raquo;</a>
-    </nav>
+  
+
+  
+
   
 
 
@@ -564,8 +372,8 @@
 	var yiliaConfig = {
 		mathjax: false,
 		isHome: false,
-		isPost: false,
-		isArchive: true,
+		isPost: true,
+		isArchive: false,
 		isTag: false,
 		isCategory: false,
 		open_in_new: false,

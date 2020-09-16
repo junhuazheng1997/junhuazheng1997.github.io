@@ -6,15 +6,21 @@
   <meta name="renderer" content="webkit">
   <meta http-equiv="X-UA-Compatible" content="IE=edge" >
   <link rel="dns-prefetch" href="https://junhuazheng.com">
-  <title>Archives | 韭菜之光的博客</title>
+  <title>虚拟机学习笔记 | 韭菜之光的博客</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta property="og:type" content="website">
-<meta property="og:title" content="韭菜之光的博客">
-<meta property="og:url" content="https://junhuazheng.com/archives/index.html">
+  <meta name="description" content="前言： 在使用stream的时候，在选择设计模式的时候，在考虑并发问题的时候，从来都绕不开JVM">
+<meta property="og:type" content="article">
+<meta property="og:title" content="虚拟机学习笔记">
+<meta property="og:url" content="https://junhuazheng.com/JVM/jvm/JVM%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/index.html">
 <meta property="og:site_name" content="韭菜之光的博客">
+<meta property="og:description" content="前言： 在使用stream的时候，在选择设计模式的时候，在考虑并发问题的时候，从来都绕不开JVM">
 <meta property="og:locale" content="en_US">
+<meta property="og:image" content="http://118.24.235.151/group1/M00/00/00/rB4AA19hghOAAtW8AAPIJyzPViU750.png">
+<meta property="article:published_time" content="2020-09-15T09:41:04.350Z">
+<meta property="article:modified_time" content="2020-09-16T03:54:37.262Z">
 <meta property="article:author" content="Junhua Zheng">
 <meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="http://118.24.235.151/group1/M00/00/00/rB4AA19hghOAAtW8AAPIJyzPViU750.png">
   
   
     <link rel="icon" href="/favicon.png">
@@ -134,37 +140,218 @@
             <canvas data-colors="#eaeaea" data-sectionHeight="100" data-contentId="js-content" id="myCanvas1" class="anm-canvas"></canvas>
           </div>
           <div id="js-content" class="content-ll">
-            
-  
-  
+            <article id="post-jvm/JVM学习笔记" class="article article-type-post " itemscope itemprop="blogPost">
+  <div class="article-inner">
     
-    
-      
-      
-      <section class="archives-wrap">
-        <div class="archive-year-wrap">
-          <a href="/archives/2020" class="archive-year">2020</a>
-        </div>
-        <div class="archives">
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/JVM/jvm/%E5%88%9D%E6%8E%A2%E5%AF%B9%E8%B1%A1/" class="archive-article-date">
-  	<time datetime="2020-09-16T03:06:39.384Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-09-16</time>
-</a>
-        </div>
-    	 
+      <header class="article-header">
+        
   
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/JVM/jvm/%E5%88%9D%E6%8E%A2%E5%AF%B9%E8%B1%A1/">JVM--对象</a>
+    <h1 class="article-title" itemprop="name">
+      虚拟机学习笔记
     </h1>
   
 
-        <div class="article-info info-on-right">
-          
-          
+        
+        <a href="/JVM/jvm/JVM%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/" class="archive-article-date">
+  	<time datetime="2020-09-15T09:41:04.350Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-09-15</time>
+</a>
+        
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>前言：</p>
+<p>在使用stream的时候，在选择设计模式的时候，在考虑并发问题的时候，从来都绕不开JVM</p>
+<a id="more"></a>
+
+
+
+<h1 id="深入理解Java虚拟机"><a href="#深入理解Java虚拟机" class="headerlink" title="深入理解Java虚拟机"></a>深入理解Java虚拟机</h1><h2 id="零、虚拟机"><a href="#零、虚拟机" class="headerlink" title="零、虚拟机"></a>零、虚拟机</h2><h3 id="1、什么是虚拟机"><a href="#1、什么是虚拟机" class="headerlink" title="1、什么是虚拟机"></a>1、什么是虚拟机</h3><blockquote>
+<p>百度：</p>
+</blockquote>
+<p>​        虚拟机指通过软件模拟的具有完整硬件系统功能的，运行在一个完全隔离环境中的**<em>完整计算机系统**</em>。</p>
+<p>​        在实体计算机中能够完成的工作在虚拟机中都能够实现。</p>
+<p>​        在计算机中创建虚拟机时，需要将实体机的部分硬盘和内容容量作为虚拟机的硬盘和内存容量。</p>
+<p>​        每个虚拟机都有独立的**<em>CMOS、硬盘、操作系统**</em>，可以和使用实体机一样对虚拟机进行操作。</p>
+<h3 id="2、虚拟机分类"><a href="#2、虚拟机分类" class="headerlink" title="2、虚拟机分类"></a>2、虚拟机分类</h3><blockquote>
+<p>System VM</p>
+</blockquote>
+<p>系统虚拟机，也称为完全虚拟化虚拟机，可以替代硬件机器，可以运行操作系统，如Linux虚拟机</p>
+<blockquote>
+<p>Process VM</p>
+</blockquote>
+<p>进程VM，被设计为在独立于平台的环境中执行计算机程序，如JVM。</p>
+<blockquote>
+<p>个人理解</p>
+</blockquote>
+<p><strong>虚拟机其实就是一个软件，用来模拟一个计算机软件，可根据不同虚拟机灵活的提供操作系统或程序运行的平台</strong></p>
+<p>运行虚拟机软件的操作系统叫**<em>Host OS**</em>（host 宿主机）</p>
+<p>在虚拟机里面运行的操作系统叫**<em>Guest OS**</em></p>
+<h2 id="一、走进Java"><a href="#一、走进Java" class="headerlink" title="一、走进Java"></a>一、走进Java</h2><h3 id="1、Java技术体系"><a href="#1、Java技术体系" class="headerlink" title="1、Java技术体系"></a>1、Java技术体系</h3><blockquote>
+<p><strong>Java Card</strong>：支持一些Java小程序（Applets）运行在小内存（如智能卡）设备上的平台</p>
+</blockquote>
+<blockquote>
+<p><strong>Java ME</strong>（Micro Edition）：支持Java程序运行在移动终端上的平台，对Java API</p>
+<p>有所精简，并加入了针对移动端的支持，以前称为J2ME</p>
+</blockquote>
+<blockquote>
+<p><strong>Java SE</strong>（Standard Edition） ：支持面向桌面级应用的Java平台，提供了完整的Java核心API，以前称为J2SE</p>
+</blockquote>
+<blockquote>
+<p><strong>Java EE</strong>（Enterprise Edition）：支持使用多层架构的企业应用（如ERP、CRM应用）的Java平台，除了提供Java SE API外，还对其做了大量的扩充并提供了相关的部署支持，以前称为J2EE</p>
+</blockquote>
+<h3 id="2、虚拟机历史"><a href="#2、虚拟机历史" class="headerlink" title="2、虚拟机历史"></a>2、虚拟机历史</h3><p><strong><em>Sun Classic VM</em></strong> </p>
+<p>世界第一款商用虚拟机           <strong><em>JDK1.0</em></strong></p>
+<blockquote>
+<p>只能以纯解释器方式来执行Java代码。</p>
+<p>如果要使用JIT编译器，就必须进行外挂，但外挂了JIT编译器，JIT编译器就完全接管了虚拟机的执行系统，解释器便不再工作了。</p>
+<p>由于解释器和编译器不能配合工作，外挂编译器后解释器便不再工作，编译器不得不对每一个方法、每一行代码都进行编译，因此<strong>执行效率低下</strong></p>
+</blockquote>
+<p><strong><em>Exact VM</em></strong></p>
+<p>Exact Memory Management            <strong><em>JDK1.2</em></strong></p>
+<blockquote>
+<p>Exact VM因它使用准确式内存管理而得名，即虚拟机可以知道内存中某个位置的数据具体是什么类型。</p>
+</blockquote>
+<blockquote>
+<p>高性能虚拟机雏形，如两级及时编译器、编译器与解释器混合工作模式等。</p>
+</blockquote>
+<blockquote>
+<p>比如，内存有一个32位的整数123456，它到底是一个reference类型只想123456的内存地址还是一个数值为123456的整数，虚拟机将有能力分辨出来，这样才能在GC的时候准确判断堆上的数据是否还可能被使用。</p>
+</blockquote>
+<p><strong><em>Sun HotSpot VM</em></strong></p>
+<p>目前使用范围最广的Java虚拟机            <strong><em>JDK1.3</em></strong></p>
+<blockquote>
+<p>HotSpot VM的热点代码探测能力可以通过执行计数器找出最具有编译价值的代码，然后通知JIT编译器以方法为单位进行编译。</p>
+<p>如果一个方法被频繁调用，或犯法中有效循环次数很多，将会分别触发标准编译和OSR（栈上替换）编译动作。</p>
+<p><strong><em>Sun JDK、OpenJDK</em></strong></p>
+<p>JDK1.8移植 JRockit 的优秀特性</p>
+</blockquote>
+<h3 id="3、多核并行"><a href="#3、多核并行" class="headerlink" title="3、多核并行"></a>3、多核并行</h3><blockquote>
+<p>CPU硬件的发展方向已经从高频率转变为多核心，随着多核时代的来临，软件开发越来越关注并行编程的领域。</p>
+</blockquote>
+<p>JDK1.5引入了 <strong><em>java.uitl.concurrent</em></strong>包实现了一个粗粒度的并发框架。</p>
+<p>JDK1.7加入的**<em>java.util.concurrent.forkjoin**</em>包则是对这个框架的一次重要扩充。</p>
+<p><strong><em>Fork/Join</em></strong>模式是处理并行编程的一个经典方法，在此模式适用范围之内，能够轻松地利用多个CPU核心提供的计算资源来写作完成一个复杂的计算任务。</p>
+<h3 id="4、HotSpot的模块化与开放性"><a href="#4、HotSpot的模块化与开放性" class="headerlink" title="4、HotSpot的模块化与开放性"></a><strong>4、HotSpot的模块化与开放性</strong></h3><p>​        HotSpot虚拟机已经有了IBM J9类似的能力，能够在编译时制定一系列特性开关，让编译输出的HotSpot可以裁剪成不同的功能，譬如支持哪些编译器，支持哪些收集器，是否支持JFR、AOT、CDS、NMT等都可以选择。能够实现这些功能特性的组合拆分，反映到源代码不仅仅是条件编译，更关键的是接口与实现的分离。</p>
+<p><strong>JDK4开放</strong></p>
+<p>Java虚拟机信息监控接口</p>
+<p><strong><em>Java Virtual Machine Profiler Interface</em></strong>        <strong><em>JVMPI</em></strong></p>
+<p>Java虚拟机调试接口</p>
+<p><strong><em>Java Virtual Machine Debug Interface</em></strong>        <strong><em>JVMDI</em></strong></p>
+<p><strong>JDK5</strong></p>
+<p>抽象出层次更高的 <strong>Java虚拟机工具接口</strong> 为所有Java虚拟机相关的工具提供本地编程接口集合（JDK6完全整合替代了监控、调试接口）</p>
+<p><strong><em>Java Virtual Machine Tool Interface</em></strong>        <strong><em>JVMTI</em></strong></p>
+<p><strong>JDK9</strong></p>
+<p>开放 <strong>Java语言级别的编译接口</strong>，使得在Java虚拟机外部增加、替换即时编译器成为可能。这个接口不入侵HotSpot代码而增加或修改HotSpot虚拟机的固有功能逻辑提供了可行性。Graal编译器就是通过这个接口植入到HotSpot之中。</p>
+<p><strong><em>Java Virtual Machine Compiler Interface</em></strong>        <strong><em>JVMCI</em></strong></p>
+<p><strong>JDK10</strong></p>
+<p>重构了Java虚拟机的垃圾收集器接口,统一了各款垃圾收集器的公共行为。</p>
+<p><strong><em>Java Virtual Machine Compiler Interface</em></strong></p>
+<h3 id="5、其他"><a href="#5、其他" class="headerlink" title="5、其他"></a>5、其他</h3><p><strong>JDK 5</strong>：</p>
+<p>对语法进行了一次扩充，加入了<strong>自动装箱、泛型、动态注解、枚举、可变长参数、遍历循环</strong>等语法。</p>
+<p><strong>JDK 8</strong></p>
+<p>新的时间、日期API</p>
+<p><strong>彻底移除HotSpot的永久代</strong></p>
+<p><strong>JDK 9</strong></p>
+<p><strong><em>Jigsaw</em></strong></p>
+<p>支持HTTP2客户单API</p>
+<p>JDK8、JDK11是LTS版，即为期三年的支持和更新</p>
+<p><strong>JDK 10</strong></p>
+<p>本地类型推断</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> ref = <span class="keyword">new</span> Object &#123;</span><br><span class="line">    CouponUser couponUser;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+
+
+<p><strong>JDK 11</strong></p>
+<p><strong>ZGC革命性的垃圾收集器</strong></p>
+<p>需要<code>+XX: +UnlockCommercialFeatures</code>解锁</p>
+<p><strong>本地类型推断加入Lambda语法</strong></p>
+<p><strong>64位虚拟机</strong>：</p>
+<blockquote>
+<p>内存问题，<strong>由于指针膨胀和各种数据类型对齐补白的原因，运行于64位系统上的java应用需要消耗更多的内存</strong>，通常比32位系统而外增加10%~30%的内存消耗。</p>
+<p>性能问题，64位虚拟机的运行速度几乎全面落后于32位虚拟机大概15%左右的性能差距</p>
+<p>改善，sun在JDK1.6Update14之后，提供了普通对象指针压缩功能 <strong><em>-XX:+UseCompressedOops</em></strong>（不建议显示设置，建议位置默认由虚拟机的Ergonomics机制自动开启），在执行代码时，动态植入压缩指令以节省内存消耗，但是开启压缩指针会增加执行代码数量，因为所有在Java堆里的、指向Java堆对象的指针都会被压缩，这些指针的访问就需要更多的代码才可以实现，并且对象指令指向对象类型的引用也被压缩了</p>
+</blockquote>
+<p>OpenJDK：是Sun在2006年末把Java开源而形成的项目</p>
+<h2 id="二、自动内存管理"><a href="#二、自动内存管理" class="headerlink" title="二、自动内存管理"></a>二、自动内存管理</h2><h3 id="1、运行时数据区"><a href="#1、运行时数据区" class="headerlink" title="1、运行时数据区"></a>1、运行时数据区</h3><p><img src="http://118.24.235.151/group1/M00/00/00/rB4AA19hghOAAtW8AAPIJyzPViU750.png"></p>
+<h4 id="1-1、程序计数器"><a href="#1-1、程序计数器" class="headerlink" title="1.1、程序计数器"></a>1.1、程序计数器</h4><p>​        程序计数器<em>Program Counter Register</em>是一块较小的内存空间，它可以看作是当<strong>前线程所执行的字节码的行号指示器</strong>。在Java虚拟机的概念模型里，<strong>字节码解释器工作时就是通过改变这个计数器的值来选取下一条需要执行的字节码指令</strong>，它是程序控制流的指示器，分之、循环、跳转、异常处理、线程恢复等基础功能都需要依赖这个计数器来完成。</p>
+<p>​        由于<strong>Java虚拟机的多线程是通过线程轮流切换、分配处理器执行时间的方式来实现的</strong>，在任何有一个确定的时间。一个处理器（对于多核处理器来说是一个内核）都会执行一条线程中的指令。因此为了线程切换后能回复到正确的执行位置，每条线程都需要有一个独立的程序计数器，各条线程之间计数器互不影响，独立存储，我们称这类内存区域为“线程私有”的内存。</p>
+<p>​        如果线程正在执行的实一个Java方法，这个计数器记录的是正在执行的虚拟机字节码指令的地址：如果正在执行的实本地方法，这个计数器则应为空（Undefined）。此内存区域是唯一一个在《Java虚拟机规范》中没有规定任何OutOfMemoryError情况的区域。</p>
+<p>​        </p>
+<h4 id="1-2、Java虚拟机栈"><a href="#1-2、Java虚拟机栈" class="headerlink" title="1.2、Java虚拟机栈"></a>1.2、Java虚拟机栈</h4><p>​        与程序计数器一样，Java虚拟机栈（<em>Java Virtual Machine Stack</em>）也是线程私有的，它的<strong>生命周期与线程相同</strong>。</p>
+<p>​        虚拟机栈描述的是Java方法执行的线程内存模型：<strong>每个方法被执行的时候，Java虚拟机都会同步创建一个栈帧（<em>Stack Frame</em>）</strong>用于存储局部变量表、操作数栈、动态连接、方法出口等信息。每一个方法被调用直至执行完毕的过程，就对应着一个栈帧在虚拟机栈中从入栈到出栈的过程。</p>
+<p>​        局部变量表存放了编译期可知的各种Java虚拟机<strong>基本数据类型</strong>（boolean、byte、char、short、int、float、long、double）、<strong>对象引用</strong>（reference类型，它并不等同于对象本身，可能是一个指向对象起始地址的引用指针。也可能是指向一个代表对象的句柄或者其他与此对象相关的位置）和<strong>returnAddress类型</strong>（指向了一条字节码指令的地址）。</p>
+<p>​        这些数据类型在局部变量表中的存储空间以局部变量槽（Slot）来表示，其中64位长度的long和double类型的数据会占用两个变量槽，其余的数据类型只占用一个。局部变量表所需的内存空间在编译期间完成分配，当进入一个方法时，这个方法需要在栈帧中分配多大的局部变量空间是完全确定的，在运行期间不会改变局部变量表的大小。（“大小“指的是变量槽的数量，虚拟机真正使用多大的内存空间来实现一个变量槽，这是完全由具体的虚拟机实现自行决定的事情）</p>
+<p>​        在《Java虚拟机规范》中，对这个内存区域规定了两类异常状况：如果线程请求的栈深度大于虚拟机所允许的深度，将会抛出StackOverFlowError异常；如果Java虚拟机栈容量可以动态扩展，当栈扩展时无法申请到足够的内存会抛出OutOfMemoryError异常。</p>
+<p><strong>HotSpot虚拟机的栈容量是不可以动态扩展的，所以不会出现由于虚拟机栈无法扩展而导致OutOfMemoryError，但在线程申请栈空间时就失败了，仍然会抛出OOM异常</strong></p>
+<h4 id="1-3、本地方法栈"><a href="#1-3、本地方法栈" class="headerlink" title="1.3、本地方法栈"></a>1.3、本地方法栈</h4><p>​        本地方法栈**<em>Native Method Stack**</em>与虚拟机栈所发挥的作用是非常相似的，其区别只是<strong>虚拟机栈为虚拟机执行Java方法（也就是字节码）服务，而本地方法栈则是为虚拟机使用到的本地（Native）方法服务</strong>。</p>
+<p>​        《Java虚拟机规范》对本地方法栈中方法使用的语言、使用方式与数据结构并没有任何强制规定，因此具体的虚拟机可以根据需要自由实现它，甚至有的Java虚拟机（譬如HotSpot虚拟机）直接就把本地方法栈和虚拟机栈合二为一。与虚拟机栈一样，本地方法栈也会在栈深度一处或者栈扩展失败时分别抛出StackOutFlowError和OutOfMemoryError异常。</p>
+<h4 id="1-4、Java堆"><a href="#1-4、Java堆" class="headerlink" title="1.4、Java堆"></a>1.4、Java堆</h4><p>​        对于Java应用程序来说，Java堆（Java Heap）是虚拟机所管理的内存中最大的一块。<strong>Java堆是被所有线程共享的一块内存区域，在虚拟机启动时创建</strong>。此内存区域的唯一目的就是存放对象实例，Java世界里“几乎”所有的对象实例都在这里分配内存。在《Java虚拟机规范》中对Java堆的描述是：<strong>“所有的对象实例以及数组都应当在堆上分配”</strong>。</p>
+<p>​        “几乎”是指从实现角度来看，随着Java语言的发展，现在已经能看到些许迹象表明日后可能出现值类型的支持，即使只考虑现在，由于即时编译技术的进步，尤其是逃逸分析技术的日渐强大，栈上分配、标量替换优化手段已经导致一些微妙的变化悄然发生，所以说Java对象实例都分配在堆上也渐渐变得不是那么绝对了。</p>
+<p>​        Java堆是垃圾收集器管理的内存区域，也被称为“GC堆”<em>Garbge Collected Heap</em>。从回收内存的角度看，由于现代垃圾收集器大部分都是基于分代收集理论设计的，所以Java堆中经常会出现“新生代”“老年代”“永久代”“Eden空间”“From Survivor空间”“To Survivor空间”等名词。这些区域划分仅仅是一部分垃圾收集器的共同特性或者说设计风格而已，而非某个Java虚拟机具体实现的固有内存布局，更不是《Java虚拟机规范》里对Java堆的进一步细致划分。HotSpot基于“经典分代”设计，需要新生代、老年代垃圾收集器搭配才能工作，但现在HotSpot里面也出现了不采用分代设计的新垃圾收集器。</p>
+<p>​        从分配内存的角度看，所有线程共享的Java堆可以划分出多个**<em>线程私有的分配缓冲区（Thread Local Allocation Buffer，TLAB）**</em>，以提升对象分配时的效率。不过无论从什么角度，无论如何划分，都不会改变Java堆中存储内容的共性，无论是哪个区域，存储的都只能是对象的实例，将Java堆细分的目的只是为了更好地回收内存，或者更快地分配内存。</p>
+<p>​        《Java虚拟机规范》规定，Java堆可以处于物理上不连续的内存空间中，但在逻辑上它应该被视为连续的，这点就像我们用磁盘空间去存储文件一样，并不要求每个文件都是连续存放。但对大对象（典型的如数组对象），多数虚拟机实现出于实现简单、存储高效的考虑，很可能会要求连续的内存空间。</p>
+<p>​        Java堆既可以被实现后才能固定大小的，也可以是可扩展的，不过当前主流的Java虚拟机都是按照可扩展来实现的<strong>（通过参数 -Xmx和-Xms设定）</strong>。如果在Java堆中没有内存完成实例分配，并且堆也无法再扩展时，Java虚拟机将会抛出OutOfMemoryError异常。</p>
+<p><strong><em>The heap is the runtime data area from which memory for all class instances and arrays is allocated</em></strong></p>
+<h4 id="1-5、方法区"><a href="#1-5、方法区" class="headerlink" title="1.5、方法区"></a>1.5、方法区</h4><p>​        方法区<em>Method Area</em>与Java堆一样，是各个线程共享的内存区域，它<strong>用于存储已经被虚拟机加载的类型信息、常量、静态变量、即时编译器编译后的代码缓存等数据</strong>。虽然《Java虚拟机规范》中把方法区描述为堆的一个逻辑部分，但是他却有一个别名叫做“非堆”(<em>Non-Heap</em>)，目的是与Java堆区分开来。</p>
+<p>​        <strong>JDK 8以前，很多Java程序员都习惯在HotSpot虚拟机上开发、部署程序，很多人都更愿意把方法区称呼为“永久代”（<em>Permanent Generation</em>），或者将两者混为一谈。</strong>本质上这两者并不是等价的，因为仅仅是当时的HotSpot虚拟机设计团队选择把收集器的分代设计扩展至方法区，或者说使用永久代来实现方法区而已，这样使得HotSpot的垃圾收集器能够像管理Java堆一样管理这部分内存，省去专门为方法区编写内存管理代码的工作。但是对于其他虚拟机实现，譬如BEA JRockit、IBM J9等来说，是不存在永久代的概念的。原则上如何实现方法区属于虚拟机的实现细节，不受《Java虚拟机规范》管束，并不要求统一。但现在回头来看，当年使用永久代来实现方法区的决定不是一个好主意，这种设计导致Java应用更容易遇到内存溢出的问题（<strong>永久代有 -XX: MaxPermSize的上限，即使不设置也有默认大小</strong>，而J9和JRockit只要没有触碰到进程可用内存的上限，例如32位系统中的4GB限制，就不会出问题），而且有极少数方法（例如 String::intern()）会因永久代的原因而导致不同虚拟机下有不同的表现。</p>
+<p>​        当Oracle收购BEA获得了JRockit的所有权后，准备吧JRockit中的优秀功能，譬如**<em>Java Mission Control**</em>管理工具，移植到HotSpot虚拟机时，但因为两者对方法区实现的差异而面临诸多困难。考虑到HotSpot未来的发展，在JDK 6的时候HotSpot开发团队就有放弃永久代，逐步改为采用本地内存来实现方法区的计划了，到了<strong>JDK 7的HotSpot，已经把原本放在永久代的字符串常量池、静态变量等移出</strong>，而到了<strong>JDK 8，终于完全废弃了永久代的概念，改用与JRockit、J9一样在本地内存中实现的元空间（<em>Meta-space</em>）来代替，把JDK7中永久代还剩余的内容（主要是类型信息）全部移到元空间中。</strong></p>
+<p>​        《Java虚拟机规范》对方法区的约束是非常宽松的，除了和Java堆一样不需要连续的内存和可以选择固定大小或者可扩展外，甚至还<strong>可以选择不实现垃圾收集</strong>。相对而言，垃圾收集行为在这个区域确实是比较少出现，但并非数据进入了方法区就如永久代的名字一样永久存在了。<strong>这区域的内存回收目标主要是针对常量池的回收和对类型的卸载</strong>，一般来说这个区域的回收效果比较难令人满意，尤其是类型的卸载，条件相当苛刻，但是这部分区域的回收又是确实必要的。以前Sun公司的Bug例表中，曾出现过若干个严重的Bug就是由低版本的HotSpot虚拟机对此区域未完全回收而导致内存泄漏。</p>
+<p>​        《Java虚拟机规范》，如果方法区无法满足新的内存分配需求时，将抛出OOM异常。</p>
+<p><strong><em>JDK 8：JEP 122-Remove the Permanent Generation</em></strong></p>
+<h4 id="1-6、运行时常量池"><a href="#1-6、运行时常量池" class="headerlink" title="1.6、运行时常量池"></a>1.6、运行时常量池</h4><p>​        运行时常量池*<strong>Runtime Constant Pool**<em>是方法区的一部分。Class文件中除了有类的版本、字段、方法、接口等描述信息外，还有一项信息是常量池表</em></strong>Constant Pool Table***，用于存放编译期生成的各种字面量与符号引用，这部分内容将在类加载后存放到方法区的运行时常量池中。</p>
+<p>​        Java虚拟机对Class文件每一部分（包括常量池）的格式都有严格规定，如每一个字节用于存储哪种数据都必须符合规范上的要求才会被虚拟机认可、加载和执行，但对于运行时常量池，《Java虚拟机规范》没有做任何细节的要求，不同提供商实现的虚拟机可以按照自己的需要来实现这个内存区域，不过一般来说，除了<strong>保存Class文件中描述的符号引用外，还会把符号引用翻译出来直接引用也存储在运行时常量池中</strong>。</p>
+<p>​        <em>Runtime Constant Pool</em> 相对于Class文件常量池的另外一个重要特征是具备动态性，Java语言并不要求常量池一定只有编译器才能产生，也就是说，<strong>并非预置入Class文件中常量池的内容才能进入方法区运行时常量池，运行期间也可以将新的常量放入池中，这种特性被开发人员利用的比较多的便是String类的intern()方法</strong>。</p>
+<h4 id="1-7、直接内存"><a href="#1-7、直接内存" class="headerlink" title="1.7、直接内存"></a>1.7、直接内存</h4><p>​        直接内存 <strong><em>Direct Memory</em></strong> 并不是虚拟机运行时数据区的一部分，也不是《Java虚拟机规范》中定义的内存区域。但是这部分内存也被频繁地使用，而且也可能导致OutOfMemoryError异常出现。</p>
+<p>​        在<strong>JDK1.4中新加入了NIO（New Input/ Output）类</strong>，<strong>引入了一种基于通道（Channel）与缓冲区（Buffer）的I/O方式。他可以使用Native函数库直接分配堆外内存，然后通过一个存储在Java堆里面的DirectByteBuffer对象作为这块内存的引用进行操作。这样能在一些场景中显著提高性能，因为避免了Java堆和Native堆中来回复制数据。</strong></p>
+<p>​        显然，本机直接内存的分配不会受到Java堆大小的限制，但是，既然是内存，则肯定还是会受到本机总内存（包括物理内存，SWAP分区或者分页文件）大小以及处理器寻址空间的限制，<strong>一般服务器管理员配置虚拟机参数时，会根据实际内存去设置-Xmx等参数信息，但经常忽略掉直接内存，使得各个内存区域总和大于物理内存限制（包括物理的和操作系统级的限制），从而导致动态扩展时出现OutOfMemoryError异常</strong>。</p>
+<p>画图总结：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">https:<span class="comment">//www.processon.com/view/link/5ee2d39d5653bb292593387c </span></span><br></pre></td></tr></table></figure>
+
+
+
+
+
+<h3 id="2、HotSpot虚拟机对象探秘"><a href="#2、HotSpot虚拟机对象探秘" class="headerlink" title="2、HotSpot虚拟机对象探秘"></a>2、HotSpot虚拟机对象探秘</h3><blockquote>
+<p> Java堆中对象分配、布局和访问的全过程</p>
+</blockquote>
+<h4 id="2-1、对象的创建"><a href="#2-1、对象的创建" class="headerlink" title="2.1、对象的创建"></a>2.1、对象的创建</h4><p>​        当Java虚拟机遇到一条字节码new（例外：复制、反序列化）指令时，首先将去<strong>检查这个指令的参数是否能在常量池中定位到一个类的符号引用</strong>，并检查这个符号引用代表的<strong>类是否已经被加载、解析和初始化过</strong>。如果没有，那必须<strong>先执行相应的类加载过程</strong>。</p>
+<p>​        在类加载检查通过后，虚拟机将为新生对象分配内存，对象所需内存的大小在类加载完成后便完全确定，为对象分配空间的任务实际上便等同于把一块确定大小的内存块从Java堆中划分出来。</p>
+<blockquote>
+<p>内存分配–如何划分可用空间：</p>
+</blockquote>
+<p>​        <strong><em>Bump The Pointer 指针碰撞</em></strong>  ：假设<strong>Java堆中内存是绝对规整的</strong>，所有被使用过的内存都被放在一边，空闲的内存被放在另一边，中间放着一个指针作为分界点的指示器，那所分配内存就仅仅是把那个指针向空闲空间方向挪动一段与对象大小相等的距离，这种分配方式称为”指针碰撞“。</p>
+<p>​        <strong><em>Free List 空闲列表</em></strong> ：如果Java堆中的内存并不是规整的，已被使用的内存和空闲的内存相互交错在一起，那就没有办法简单的进行指针碰撞了。虚拟机就必须维护一个列表，记录哪些内存块是可用的，在分配的时候从列表中找到一块足够大的空间划分给对象实例，并更新列表上的记录，这种分配方式称为”空闲列表“。</p>
+<pre><code>     选择哪种分配方式由Java堆是否规整决定，而 **Java堆是否规整又由所采用的的垃圾收集器是否带有空间压缩整理 Compact 的能力决定**。因此，当使用**Serial、ParNew等带压缩整理过程的收集器时**，系统采用的分配算法是指针碰撞，既简单又高效；而当使用**CMS这种基于清除 Sweep 算法的收集器**时，*理论*上就只能采用较为复杂的空闲列表来分配内存。</code></pre>
+<p>（在CMS的实现里面：为了能在多数情况下分配的更快，设计了一个叫做 <strong><em>Linear Allocation Buffer</em></strong> 的分配缓冲区，通过空闲列表拿到一大块分配缓冲区之后，在它里面仍然可以使用指针碰撞方式来分配。）</p>
+<blockquote>
+<p>内存分配–多线程：</p>
+</blockquote>
+<p>​        对象创建在虚拟机中是非常频繁地行为，即使仅仅修改一个指针所指向的位置，在并发情况下也并不是线程安全的，可能出现<strong>正在给对象A分配内存，指针还没来得及修改，对象B又同时用了原来的指针来分配内存的情况</strong>。</p>
+<p>​        解决这个问题有两种可选方案：</p>
+<p>​        1、<strong>对分配内存空间的动作进行同步处理</strong>——实际虚拟机是采用CAS配上失败重试的方式保证更新操作的原子性的；</p>
+<p>​        2、把内存分配的动作按照线程划分在不同的空间之中进行，即<strong>每个线程在Java堆中预先分配一小块内存</strong>，称为本地线程分配缓冲 <strong><em>Thread Local Allocation Buffer， TLAB</em></strong> ，哪个线程要分配内存，就在哪个线程的本地缓冲区中分配，只有本地缓冲区用完了，分配新的缓冲区时才需要同步锁定。</p>
+<p>​        虚拟机是否使用TLAB，可以通过 <code>-XX: +/-UseTLAB</code> 参数来设定。</p>
+<blockquote>
+<p>内存分配–分配完毕：</p>
+</blockquote>
+<p>​        <strong>赋予零值：</strong></p>
+<p>​        分配完成之后，虚拟机必须将分配到的内存空间（但不包括对象头）都初始化为零值，如果使用了TLAB的话，这项工作也可以提前至TLAB分配时顺便进行。这步操作保证了对象的实例字段在Java代码中可以不赋初始值就直接使用，使程序能访问这些字段的数据类型所对应的零值。</p>
+<p>​        <strong>必要设置：</strong></p>
+<p>​        接下来，Java虚拟机还要对对象进行必要的设置。例如这个对象是哪个类的实例、如何才能找到类的元数据信息、对象的哈希码（实际上对象的哈希码会延后到真正调用 Object::hashCode() 方法时才计算）、对象的GC分代年龄等信息。这些信息存放在对象的对象头（<strong>Object Header</strong>）之中。根据虚拟机当前运行状态的不同，如是否启用偏向锁等，对象头会有不同的设置方式。</p>
+<p>​        <strong>构造函数：</strong></p>
+<p>​        在上面工作都完成之后，从虚拟机的视角来看，一个新的对象已经产生了。但是从Java程序的视角看来，对象创建才刚刚开始——构造函数，即<strong>Class文件中的<code>&lt;init&gt;()</code>方法还没有执行，所有的字段都为默认的零值，对象需要的其他资源和状态信息也还没有按照预定的意图构造好</strong>。一般来说（由字节码流中new指令后面是否跟随  <strong><em>invokespecial</em></strong> 指令所决定，Java编译器会在遇到new关键字的地方同时生成这两条字节码指令，但如果直接通过其他方式产生的则不一定如此），new指令之后会接着执行<code>&lt;init&gt;()</code>方法，按照程序员的意愿对对象进行初始化，这样一个真正可用的对象才算完全被构造出来。</p>
+
+      
+
+      
+      
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+      
 	<div class="article-category tagcloud">
 		<i class="icon-book icon"></i>
 		<ul class="article-tag-list">
@@ -177,370 +364,112 @@
 	</div>
 
 
+      
+
+      
+        
+<div class="share-btn share-icons tooltip-left">
+  <div class="tooltip tooltip-east">
+    <span class="tooltip-item">
+      <a href="javascript:;" class="share-sns share-outer">
+        <i class="icon icon-share"></i>
+      </a>
+    </span>
+    <span class="tooltip-content">
+      <div class="share-wrap">
+        <div class="share-icons">
+          <a class="weibo share-sns" href="javascript:;" data-type="weibo">
+            <i class="icon icon-weibo"></i>
+          </a>
+          <a class="weixin share-sns wxFab" href="javascript:;" data-type="weixin">
+            <i class="icon icon-weixin"></i>
+          </a>
+          <a class="qq share-sns" href="javascript:;" data-type="qq">
+            <i class="icon icon-qq"></i>
+          </a>
+          <a class="douban share-sns" href="javascript:;" data-type="douban">
+            <i class="icon icon-douban"></i>
+          </a>
+          <a class="qzone share-sns" href="javascript:;" data-type="qzone">
+            <i class="icon icon-qzone"></i>
+          </a>
+          <a class="facebook share-sns" href="javascript:;" data-type="facebook">
+            <i class="icon icon-facebook"></i>
+          </a>
+          <a class="twitter share-sns" href="javascript:;" data-type="twitter">
+            <i class="icon icon-twitter"></i>
+          </a>
+          <a class="google share-sns" href="javascript:;" data-type="google">
+            <i class="icon icon-google"></i>
+          </a>
         </div>
-        <div class="clearfix"></div>
-    </header>
+      </div>
+    </span>
+  </div>
+</div>
+
+<div class="page-modal wx-share js-wx-box">
+    <a class="close js-modal-close" href="javascript:;"><i class="icon icon-close"></i></a>
+    <p>扫一扫，分享到微信</p>
+    <div class="wx-qrcode">
+      <img src="//pan.baidu.com/share/qrcode?url=https://junhuazheng.com/JVM/jvm/JVM%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/" alt="微信分享二维码">
+    </div>
+</div>
+
+<div class="mask js-mask"></div>
+      
+      <div class="clearfix"></div>
+    </div>
   </div>
 </article>
+
   
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/docker/docker/Dockerfile/" class="archive-article-date">
-  	<time datetime="2020-09-15T09:41:10.543Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-09-15</time>
-</a>
+<nav id="article-nav">
+  
+    <a href="/Java-math/multi/Java.math/" id="article-nav-newer" class="article-nav-link-wrap">
+      <i class="icon-circle-left"></i>
+      <div class="article-nav-title">
+        
+          java.math
+        
+      </div>
+    </a>
+  
+  
+    <a href="/JVM/jvm/%E5%88%9D%E6%8E%A2%E7%B1%BB%E5%8A%A0%E8%BD%BD/" id="article-nav-older" class="article-nav-link-wrap">
+      <div class="article-nav-title">字节码与类加载</div>
+      <i class="icon-circle-right"></i>
+    </a>
+  
+</nav>
+
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
         </div>
-    	 
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/docker/docker/Dockerfile/">Dokerfile实战</a>
-    </h1>
-  
-
-        <div class="article-info info-on-right">
-          
-          
-	<div class="article-category tagcloud">
-		<i class="icon-book icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="/categories/docker//" class="article-tag-list-link color2">docker</a>
-        		</li>
-      		
-		</ul>
-	</div>
+        
+        
+    </div>
+</aside>
 
 
-        </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
+
   
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/%E7%AE%97%E6%B3%95%E4%B8%8E%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%E4%B8%8E%E7%AE%97%E6%B3%95/%E7%AE%97%E6%B3%95/" class="archive-article-date">
-  	<time datetime="2020-09-15T09:41:04.568Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-09-15</time>
-</a>
-        </div>
-    	 
   
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/%E7%AE%97%E6%B3%95%E4%B8%8E%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%E4%B8%8E%E7%AE%97%E6%B3%95/%E7%AE%97%E6%B3%95/">算法与数据结构</a>
-    </h1>
   
 
-        <div class="article-info info-on-right">
-          
-          
-	<div class="article-category tagcloud">
-		<i class="icon-book icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="/categories/算法与数据结构//" class="article-tag-list-link color3">算法与数据结构</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-
-        </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
-  
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/%E5%9B%9E%E9%A1%BE%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/" class="archive-article-date">
-  	<time datetime="2020-09-15T09:41:04.556Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-09-15</time>
-</a>
-        </div>
-    	 
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/%E5%9B%9E%E9%A1%BE%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/">设计模式回顾与突破</a>
-    </h1>
   
 
-        <div class="article-info info-on-right">
-          
-          
-	<div class="article-category tagcloud">
-		<i class="icon-book icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="/categories/设计模式//" class="article-tag-list-link color5">设计模式</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-
-        </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
-  
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/%E5%A4%9A%E7%BA%BF%E7%A8%8B/%E5%A4%9A%E7%BA%BF%E7%A8%8B/%E5%A4%9A%E7%BA%BF%E7%A8%8B%E5%9F%BA%E7%A1%80/" class="archive-article-date">
-  	<time datetime="2020-09-15T09:41:04.545Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-09-15</time>
-</a>
-        </div>
-    	 
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/%E5%A4%9A%E7%BA%BF%E7%A8%8B/%E5%A4%9A%E7%BA%BF%E7%A8%8B/%E5%A4%9A%E7%BA%BF%E7%A8%8B%E5%9F%BA%E7%A1%80/">多线程--AQS与JUC</a>
-    </h1>
   
 
-        <div class="article-info info-on-right">
-          
-          
-	<div class="article-category tagcloud">
-		<i class="icon-book icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="/categories/多线程//" class="article-tag-list-link color4">多线程</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-
-        </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
-  
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/zookeeper/zookeeper/Zookeeper/" class="archive-article-date">
-  	<time datetime="2020-09-15T09:41:04.533Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-09-15</time>
-</a>
-        </div>
-    	 
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/zookeeper/zookeeper/Zookeeper/">zk的基本概念</a>
-    </h1>
-  
-
-        <div class="article-info info-on-right">
-          
-          
-	<div class="article-category tagcloud">
-		<i class="icon-book icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="/categories/zookeeper//" class="article-tag-list-link color5">zookeeper</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-
-        </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
-  
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/springcloud/spring/SpringCloud/" class="archive-article-date">
-  	<time datetime="2020-09-15T09:41:04.522Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-09-15</time>
-</a>
-        </div>
-    	 
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/springcloud/spring/SpringCloud/">springcloud问题随记</a>
-    </h1>
-  
-
-        <div class="article-info info-on-right">
-          
-          
-	<div class="article-category tagcloud">
-		<i class="icon-book icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="/categories/springcloud//" class="article-tag-list-link color2">springcloud</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-
-        </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
-  
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/spring/spring/Spring/" class="archive-article-date">
-  	<time datetime="2020-09-15T09:41:04.510Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-09-15</time>
-</a>
-        </div>
-    	 
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/spring/spring/Spring/">spring问题随记</a>
-    </h1>
-  
-
-        <div class="article-info info-on-right">
-          
-          
-	<div class="article-category tagcloud">
-		<i class="icon-book icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="/categories/spring//" class="article-tag-list-link color2">spring</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-
-        </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
-  
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/rpc/JMS/rpc/rpc%E6%A6%82%E8%BF%B0%E4%B8%8EJMS/" class="archive-article-date">
-  	<time datetime="2020-09-15T09:41:04.454Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-09-15</time>
-</a>
-        </div>
-    	 
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/rpc/JMS/rpc/rpc%E6%A6%82%E8%BF%B0%E4%B8%8EJMS/">rpc概述与JMS</a>
-    </h1>
-  
-
-        <div class="article-info info-on-right">
-          
-          
-	<div class="article-category tagcloud">
-		<i class="icon-book icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="/categories/rpc//" class="article-tag-list-link color4">rpc</a>
-        		</li>
-      		 
-        		<li class="article-tag-list-item">
-        			<a href="/categories/rpc/JMS//" class="article-tag-list-link color4">JMS</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-
-        </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
-  
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/mongodb/nosql/nosql/MongoDB%E5%9F%BA%E7%A1%80/" class="archive-article-date">
-  	<time datetime="2020-09-15T09:41:04.438Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-09-15</time>
-</a>
-        </div>
-    	 
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/mongodb/nosql/nosql/MongoDB%E5%9F%BA%E7%A1%80/">mongodb的部署及基本概念</a>
-    </h1>
-  
-
-        <div class="article-info info-on-right">
-          
-          
-	<div class="article-category tagcloud">
-		<i class="icon-book icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="/categories/mongodb//" class="article-tag-list-link color3">mongodb</a>
-        		</li>
-      		 
-        		<li class="article-tag-list-item">
-        			<a href="/categories/mongodb/nosql//" class="article-tag-list-link color1">nosql</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-
-        </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
-  
-  
-    </div></section>
-  
-
-    
-    <nav id="page-nav">
-      <span class="page-number current">1</span><a class="page-number" href="/archives/page/2/">2</a><a class="page-number" href="/archives/page/3/">3</a><a class="extend next" rel="next" href="/archives/page/2/">Next &amp;raquo;</a>
-    </nav>
   
 
 
@@ -564,8 +493,8 @@
 	var yiliaConfig = {
 		mathjax: false,
 		isHome: false,
-		isPost: false,
-		isArchive: true,
+		isPost: true,
+		isArchive: false,
 		isTag: false,
 		isCategory: false,
 		open_in_new: false,

@@ -6,13 +6,17 @@
   <meta name="renderer" content="webkit">
   <meta http-equiv="X-UA-Compatible" content="IE=edge" >
   <link rel="dns-prefetch" href="https://junhuazheng.com">
-  <title>Archives | 韭菜之光的博客</title>
+  <title>问题随记 | 韭菜之光的博客</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta property="og:type" content="website">
-<meta property="og:title" content="韭菜之光的博客">
-<meta property="og:url" content="https://junhuazheng.com/archives/index.html">
+  <meta name="description" content="ALL三元运算符 三元运算符先运算再赋值 if else 直接赋值 通过查看汇编和测试，if else 速度更快  @Primary 表示在众多Bean中，优先使用@primary注解的bean  @Nullable org.springframework.lang.Nullable 定义的字段可以为空  泛型中的标记符含义 E ：element 在集合中使用，因为集合中存放的实元素 T ：typ">
+<meta property="og:type" content="article">
+<meta property="og:title" content="问题随记">
+<meta property="og:url" content="https://junhuazheng.com/uncategorized/multi/%E9%97%AE%E9%A2%98%E8%AE%B0%E5%BD%95/index.html">
 <meta property="og:site_name" content="韭菜之光的博客">
+<meta property="og:description" content="ALL三元运算符 三元运算符先运算再赋值 if else 直接赋值 通过查看汇编和测试，if else 速度更快  @Primary 表示在众多Bean中，优先使用@primary注解的bean  @Nullable org.springframework.lang.Nullable 定义的字段可以为空  泛型中的标记符含义 E ：element 在集合中使用，因为集合中存放的实元素 T ：typ">
 <meta property="og:locale" content="en_US">
+<meta property="article:published_time" content="2020-09-15T09:41:04.400Z">
+<meta property="article:modified_time" content="2020-09-16T03:28:58.056Z">
 <meta property="article:author" content="Junhua Zheng">
 <meta name="twitter:card" content="summary">
   
@@ -134,413 +138,244 @@
             <canvas data-colors="#eaeaea" data-sectionHeight="100" data-contentId="js-content" id="myCanvas1" class="anm-canvas"></canvas>
           </div>
           <div id="js-content" class="content-ll">
-            
-  
-  
+            <article id="post-multi/问题记录" class="article article-type-post " itemscope itemprop="blogPost">
+  <div class="article-inner">
     
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      问题随记
+    </h1>
+  
+
+        
+        <a href="/uncategorized/multi/%E9%97%AE%E9%A2%98%E8%AE%B0%E5%BD%95/" class="archive-article-date">
+  	<time datetime="2020-09-15T09:41:04.400Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-09-15</time>
+</a>
+        
+      </header>
     
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h2 id="ALL"><a href="#ALL" class="headerlink" title="ALL"></a>ALL</h2><h6 id="三元运算符"><a href="#三元运算符" class="headerlink" title="三元运算符"></a>三元运算符</h6><blockquote>
+<p>三元运算符先运算再赋值</p>
+<p>if else 直接赋值</p>
+<p>通过查看汇编和测试，if else 速度更快</p>
+</blockquote>
+<h6 id="Primary"><a href="#Primary" class="headerlink" title="@Primary"></a>@Primary</h6><blockquote>
+<p>表示在众多Bean中，优先使用@primary注解的bean</p>
+</blockquote>
+<h6 id="Nullable"><a href="#Nullable" class="headerlink" title="@Nullable"></a>@Nullable</h6><blockquote>
+<p>org.springframework.lang.Nullable 定义的字段可以为空</p>
+</blockquote>
+<h6 id="泛型中的标记符含义"><a href="#泛型中的标记符含义" class="headerlink" title="泛型中的标记符含义"></a>泛型中的标记符含义</h6><blockquote>
+<p>E ：element 在集合中使用，因为集合中存放的实元素</p>
+<p>T ：type java类</p>
+<p>K ：key</p>
+<p>V ：value</p>
+<p>N ：number 数值类型</p>
+<p>M ：mapper对象</p>
+<p>？ ：表示不确定的java类型</p>
+</blockquote>
+<h6 id="po、bo等model"><a href="#po、bo等model" class="headerlink" title="po、bo等model"></a>po、bo等model</h6><blockquote>
+<p>PO：Persistant Object 持久化对象，数据库记录在java对象中的显示状态</p>
+<p>BO：Business Object 业务对象，方便业务逻辑处理</p>
+<p>VO：Value Object 值对象，主要体现在视图对象，用于视图层与控制层的交换传输</p>
+<p>DTO：DataTransferObject 数据传输对象，即拓展或缩减等处理的PO</p>
+<p>POJO：简单java对象，持久化=po、传递=dto、表示层=vo</p>
+</blockquote>
+<h6 id="lt-CDATA-gt"><a href="#lt-CDATA-gt" class="headerlink" title="&lt;![CDATA[]]&gt;"></a><code>&lt;![CDATA[]]&gt;</code></h6><figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">select</span> <span class="attr">id</span>=<span class="string">&quot;callCommunityProcedure&quot;</span></span></span><br><span class="line"><span class="tag">         <span class="attr">statementType</span>=<span class="string">&quot;CALLABLE&quot;</span>&gt;</span></span><br><span class="line">     &lt;![CDATA[</span><br><span class="line"></span><br><span class="line">     call community_count(</span><br><span class="line">     #&#123;targetTypeCode,mode=IN,jdbcType=VARCHAR&#125;,</span><br><span class="line">     #&#123;targetId,mode=IN,jdbcType=BIGINT&#125;,</span><br><span class="line">        #&#123;columnName,mode=IN,jdbcType=VARCHAR&#125;,</span><br><span class="line">         #&#123;count,mode=IN,jdbcType=INTEGER&#125;);</span><br><span class="line"></span><br><span class="line">     ]]&gt;</span><br><span class="line"> <span class="tag">&lt;/<span class="name">select</span></span></span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>statmentType表示语句类型，可以指定为STATEMENT(非预编译等)</li>
+<li>非预编译时，使用<code>$&#123;&#125;</code></li>
+<li><code>&lt;![CDATA[]]&gt;</code>标记所包含的内容表示为纯文本</li>
+</ul>
+<h6 id="LocalDateTime"><a href="#LocalDateTime" class="headerlink" title="LocalDateTime"></a>LocalDateTime</h6><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@JsonFormat</span> <span class="comment">// 后台到前台的时间格式的转换</span></span><br><span class="line"><span class="meta">@JsonFormat(pattern = &quot;yyyy-MM-dd HH:mm:ss&quot;, timezone=&quot;GMT+8&quot;)</span></span><br><span class="line"></span><br><span class="line"><span class="meta">@DateFormat</span> <span class="comment">// 前台到后台的时间格式的转换</span></span><br><span class="line"><span class="meta">@DateFormat(pattern = &quot;yyyy-MM-dd HH:mm:ss&quot;)</span></span><br><span class="line"></span><br><span class="line"><span class="comment">// 以上两种方式是否成功未知</span></span><br><span class="line"><span class="comment">// LocalDateTime 在接受的时候由@RequestBody的解析会报错</span></span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+
+
+<h6 id="获取自增id（容易报错，改为使用mybatis插入后数据保存到实体）"><a href="#获取自增id（容易报错，改为使用mybatis插入后数据保存到实体）" class="headerlink" title="获取自增id（容易报错，改为使用mybatis插入后数据保存到实体）"></a>获取自增id（容易报错，改为使用mybatis插入后数据保存到实体）</h6><figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">-- 获得刚刚插入的那条数据的自增主键</span></span><br><span class="line"><span class="comment">-- 条件：必须同一个SqlSession 否则为0</span></span><br><span class="line"><span class="keyword">select</span> <span class="keyword">LAST_INSERT_ID</span>()</span><br></pre></td></tr></table></figure>
+
+
+
+<h6 id="LocalDateTime比较大小"><a href="#LocalDateTime比较大小" class="headerlink" title="LocalDateTime比较大小"></a>LocalDateTime比较大小</h6><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">infoList.stream().filter(info -&gt; LocalDateTime.now()</span><br><span class="line">    .compareTo(info.getStartTime() &gt; <span class="number">0</span>))</span><br><span class="line">    .filter(info -&gt; LocalDateTime.now()</span><br><span class="line">    .compareTo(info.getEndTime()) &lt; <span class="number">0</span>).collect(Collectors.toList())</span><br><span class="line"> </span><br><span class="line"><span class="comment">// 上面的业务代码表示：</span></span><br><span class="line"><span class="comment">// 将现在的LocalDateTime与开始和结束进行比较，compareTo()大于则返回1，否则返回-1</span></span><br></pre></td></tr></table></figure>
+
+
+
+<h6 id="mybatis：where-in"><a href="#mybatis：where-in" class="headerlink" title="mybatis：where in"></a>mybatis：where in</h6><p><strong>报错信息</strong></p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">SELECT</span> info_id <span class="keyword">FROM</span> coupon_rule_limit </span><br><span class="line"><span class="keyword">WHERE</span> is_template = ?</span><br><span class="line">store_id <span class="keyword">in</span> (?, <span class="number">-1</span>)</span><br></pre></td></tr></table></figure>
+
+<p><strong>SQL语句</strong></p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">SELECT</span> info_id <span class="keyword">FROM</span> coupon_rule_limit </span><br><span class="line"><span class="keyword">WHERE</span> store_id = (<span class="comment">#&#123;storeId&#125;, -1)</span></span><br><span class="line"></span><br><span class="line"><span class="comment">-- 不能直接使用 in()</span></span><br></pre></td></tr></table></figure>
+
+<p><strong>解决方法</strong></p>
+<blockquote>
+<p>由于只有一个storeId和-1，所以没有在mapper.xml使用foreach，而是构造一个各属性相同但store_id不同的对象，进行查询，将查询结果进行合并</p>
+</blockquote>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 合并操作</span></span><br><span class="line">noLimitList.stream().parallel().</span><br><span class="line">    collect(Collectors.toCollection(() -&gt; list))</span><br><span class="line"><span class="comment">// 以并行流的方式，将noLimitList赋给list，list就是数据合并后的集合</span></span><br></pre></td></tr></table></figure>
+
+
+
+<h6 id="并行流与顺序流"><a href="#并行流与顺序流" class="headerlink" title="并行流与顺序流"></a>并行流与顺序流</h6><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">stream().parallel() <span class="comment">//并行流</span></span><br><span class="line">stream().sequential() <span class="comment">//顺序流</span></span><br></pre></td></tr></table></figure>
+
+<blockquote>
+<p>并行流将内容分成多个数据块，并使用不同线程分别处理每个数据块的流</p>
+</blockquote>
+<blockquote>
+<p>并行流与顺序流间可以随意切换</p>
+</blockquote>
+<h6 id="StringBuffer与StringBuilder"><a href="#StringBuffer与StringBuilder" class="headerlink" title="StringBuffer与StringBuilder"></a>StringBuffer与StringBuilder</h6><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// StirngBuilder有速度优势，但不是线程安全的</span></span><br><span class="line"><span class="comment">// capacity = 16</span></span><br><span class="line">    AbstractStringBuilder(<span class="keyword">int</span> capacity) &#123;</span><br><span class="line">        <span class="keyword">if</span> (COMPACT_STRINGS) &#123;</span><br><span class="line">            value = <span class="keyword">new</span> <span class="keyword">byte</span>[capacity];</span><br><span class="line">            coder = LATIN1;</span><br><span class="line">        &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">            value = StringUTF16.newBytesFor(capacity);</span><br><span class="line">            coder = UTF16;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure>
+
+
+
+<h6 id="静态变量"><a href="#静态变量" class="headerlink" title="静态变量"></a>静态变量</h6><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">static</span> <span class="class"><span class="keyword">class</span> <span class="title">TestChange</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">       <span class="keyword">static</span> String str;</span><br><span class="line"></span><br><span class="line">       <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">change</span><span class="params">()</span> </span>&#123;</span><br><span class="line">           str = <span class="string">&quot;罗志祥&quot;</span>;</span><br><span class="line">       &#125;</span><br><span class="line">   &#125;</span><br><span class="line"></span><br><span class="line">   <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> </span>&#123;</span><br><span class="line">       TestChange testChange = <span class="keyword">new</span> TestChange();</span><br><span class="line">       TestChange testChange1 = <span class="keyword">new</span> TestChange();</span><br><span class="line">       testChange.str = <span class="string">&quot;wahahha&quot;</span>;</span><br><span class="line">       testChange1.str = <span class="string">&quot;shuangwaiwai&quot;</span>;</span><br><span class="line"></span><br><span class="line">       System.out.println(testChange.str);</span><br><span class="line">       System.out.println(testChange1.str);</span><br><span class="line">   &#125;</span><br></pre></td></tr></table></figure>
+
+<p>输出：</p>
+<p>shuangwaiwai</p>
+<p>shuangwaiwai</p>
+<p>结论（myself）：静态String被加入了常量池，不管怎么new对象，都是同一个。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">redisTemplate.keys(&quot;xxx*&quot;)</span><br><span class="line">&#x2F;&#x2F; 模糊匹配获得key的set，开头不能是通配符，格式可以为： abc* 等</span><br></pre></td></tr></table></figure>
+
+
+
+<p><strong>@Autowired 最佳使用方式</strong></p>
+<blockquote>
+<p>1、可以防止空指针异常</p>
+<p>2、可以明确成员变量的加载顺序</p>
+</blockquote>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 构造器注入</span></span><br><span class="line"></span><br><span class="line"><span class="meta">@RestContoller</span></span><br><span class="line"><span class="meta">@RequestMapping(&quot;/user&quot;)</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">UserController</span> </span>&#123;</span><br><span class="line">    </span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">final</span> UserService userService;</span><br><span class="line">    </span><br><span class="line">    <span class="comment">// 使用基于构造函数的依赖注入</span></span><br><span class="line">    <span class="comment">// 使用断言来强制依赖</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="title">UserController</span><span class="params">(<span class="meta">@Qualifier(&quot;userService&quot;)</span>UserService userService)</span> </span>&#123;</span><br><span class="line">        Assert.notNull(userService, <span class="string">&quot;xxx must not be null&quot;</span>);</span><br><span class="line">        <span class="keyword">this</span>.userService = userService</span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// setter方法Autowried</span></span><br><span class="line"></span><br><span class="line"><span class="meta">@RequestMapping(&quot;/user&quot;)</span></span><br><span class="line"><span class="meta">@RestController</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">UserController</span> </span>&#123;</span><br><span class="line">    </span><br><span class="line">    <span class="keyword">private</span> UserService userService;</span><br><span class="line">    </span><br><span class="line">    <span class="meta">@Autowried</span></span><br><span class="line">    <span class="meta">@Qualifier(&quot;userService&quot;)</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">setUserService</span><span class="params">(UserService userService)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">this</span>.userService = userService;</span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+
+
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">com.github.pagehelper</span><br></pre></td></tr></table></figure>
+
+<p>分页问题：</p>
+<p>由于使用了流等数据聚合操作，返回的list与Page的list，类加载器不同，导致无法转换为Page。而直接使用list.size()，就会导致总记录数永远等于查询的条数。</p>
+<p>解决：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// startPaeg 返回page对象，这个page对象保存在ThreadLoal</span></span><br><span class="line">Page&lt;Object&gt; page = PageHelper.startPage(...);</span><br><span class="line"></span><br><span class="line"><span class="comment">// 执行查询 pageHelper会将查询结果保存在ThreadLocal 返回我们需要的条数</span></span><br><span class="line">List&lt;CouponInfo&gt; list = baseMapper.selectCouponList(...);</span><br><span class="line"></span><br><span class="line"><span class="comment">// 执行查询完毕 此时 page的total已经被赋值(查询的时候多查询了一次count)</span></span><br><span class="line">Long pageCount = page.getTotal();</span><br><span class="line"></span><br><span class="line"><span class="comment">// 该pageCount 就是我们要的 TotalRecord</span></span><br></pre></td></tr></table></figure>
+
+
+      
+
       
       
-      <section class="archives-wrap">
-        <div class="archive-year-wrap">
-          <a href="/archives/2020" class="archive-year">2020</a>
-        </div>
-        <div class="archives">
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/JVM/jvm/%E5%88%9D%E6%8E%A2%E5%AF%B9%E8%B1%A1/" class="archive-article-date">
-  	<time datetime="2020-09-16T03:06:39.384Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-09-16</time>
-</a>
-        </div>
-    	 
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/JVM/jvm/%E5%88%9D%E6%8E%A2%E5%AF%B9%E8%B1%A1/">JVM--对象</a>
-    </h1>
-  
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+      
 
-        <div class="article-info info-on-right">
-          
-          
-	<div class="article-category tagcloud">
-		<i class="icon-book icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="/categories/JVM//" class="article-tag-list-link color4">JVM</a>
-        		</li>
-      		
-		</ul>
-	</div>
+      
 
-
+      
+        
+<div class="share-btn share-icons tooltip-left">
+  <div class="tooltip tooltip-east">
+    <span class="tooltip-item">
+      <a href="javascript:;" class="share-sns share-outer">
+        <i class="icon icon-share"></i>
+      </a>
+    </span>
+    <span class="tooltip-content">
+      <div class="share-wrap">
+        <div class="share-icons">
+          <a class="weibo share-sns" href="javascript:;" data-type="weibo">
+            <i class="icon icon-weibo"></i>
+          </a>
+          <a class="weixin share-sns wxFab" href="javascript:;" data-type="weixin">
+            <i class="icon icon-weixin"></i>
+          </a>
+          <a class="qq share-sns" href="javascript:;" data-type="qq">
+            <i class="icon icon-qq"></i>
+          </a>
+          <a class="douban share-sns" href="javascript:;" data-type="douban">
+            <i class="icon icon-douban"></i>
+          </a>
+          <a class="qzone share-sns" href="javascript:;" data-type="qzone">
+            <i class="icon icon-qzone"></i>
+          </a>
+          <a class="facebook share-sns" href="javascript:;" data-type="facebook">
+            <i class="icon icon-facebook"></i>
+          </a>
+          <a class="twitter share-sns" href="javascript:;" data-type="twitter">
+            <i class="icon icon-twitter"></i>
+          </a>
+          <a class="google share-sns" href="javascript:;" data-type="google">
+            <i class="icon icon-google"></i>
+          </a>
         </div>
-        <div class="clearfix"></div>
-    </header>
+      </div>
+    </span>
+  </div>
+</div>
+
+<div class="page-modal wx-share js-wx-box">
+    <a class="close js-modal-close" href="javascript:;"><i class="icon icon-close"></i></a>
+    <p>扫一扫，分享到微信</p>
+    <div class="wx-qrcode">
+      <img src="//pan.baidu.com/share/qrcode?url=https://junhuazheng.com/uncategorized/multi/%E9%97%AE%E9%A2%98%E8%AE%B0%E5%BD%95/" alt="微信分享二维码">
+    </div>
+</div>
+
+<div class="mask js-mask"></div>
+      
+      <div class="clearfix"></div>
+    </div>
   </div>
 </article>
+
   
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/docker/docker/Dockerfile/" class="archive-article-date">
-  	<time datetime="2020-09-15T09:41:10.543Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-09-15</time>
-</a>
+<nav id="article-nav">
+  
+    <a href="/mysql/mysql/MySQL/" id="article-nav-newer" class="article-nav-link-wrap">
+      <i class="icon-circle-left"></i>
+      <div class="article-nav-title">
+        
+          mysql的使用及存储过程
+        
+      </div>
+    </a>
+  
+  
+    <a href="/sun-misc-unsafe/multi/sun.misc.Unsafe/" id="article-nav-older" class="article-nav-link-wrap">
+      <div class="article-nav-title">初探unsafe</div>
+      <i class="icon-circle-right"></i>
+    </a>
+  
+</nav>
+
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
         </div>
-    	 
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/docker/docker/Dockerfile/">Dokerfile实战</a>
-    </h1>
-  
-
-        <div class="article-info info-on-right">
-          
-          
-	<div class="article-category tagcloud">
-		<i class="icon-book icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="/categories/docker//" class="article-tag-list-link color2">docker</a>
-        		</li>
-      		
-		</ul>
-	</div>
+        
+        
+    </div>
+</aside>
 
 
-        </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
+
   
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/%E7%AE%97%E6%B3%95%E4%B8%8E%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%E4%B8%8E%E7%AE%97%E6%B3%95/%E7%AE%97%E6%B3%95/" class="archive-article-date">
-  	<time datetime="2020-09-15T09:41:04.568Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-09-15</time>
-</a>
-        </div>
-    	 
   
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/%E7%AE%97%E6%B3%95%E4%B8%8E%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%E4%B8%8E%E7%AE%97%E6%B3%95/%E7%AE%97%E6%B3%95/">算法与数据结构</a>
-    </h1>
   
 
-        <div class="article-info info-on-right">
-          
-          
-	<div class="article-category tagcloud">
-		<i class="icon-book icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="/categories/算法与数据结构//" class="article-tag-list-link color3">算法与数据结构</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-
-        </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
-  
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/%E5%9B%9E%E9%A1%BE%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/" class="archive-article-date">
-  	<time datetime="2020-09-15T09:41:04.556Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-09-15</time>
-</a>
-        </div>
-    	 
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/%E5%9B%9E%E9%A1%BE%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/">设计模式回顾与突破</a>
-    </h1>
   
 
-        <div class="article-info info-on-right">
-          
-          
-	<div class="article-category tagcloud">
-		<i class="icon-book icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="/categories/设计模式//" class="article-tag-list-link color5">设计模式</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-
-        </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
-  
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/%E5%A4%9A%E7%BA%BF%E7%A8%8B/%E5%A4%9A%E7%BA%BF%E7%A8%8B/%E5%A4%9A%E7%BA%BF%E7%A8%8B%E5%9F%BA%E7%A1%80/" class="archive-article-date">
-  	<time datetime="2020-09-15T09:41:04.545Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-09-15</time>
-</a>
-        </div>
-    	 
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/%E5%A4%9A%E7%BA%BF%E7%A8%8B/%E5%A4%9A%E7%BA%BF%E7%A8%8B/%E5%A4%9A%E7%BA%BF%E7%A8%8B%E5%9F%BA%E7%A1%80/">多线程--AQS与JUC</a>
-    </h1>
   
 
-        <div class="article-info info-on-right">
-          
-          
-	<div class="article-category tagcloud">
-		<i class="icon-book icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="/categories/多线程//" class="article-tag-list-link color4">多线程</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-
-        </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
-  
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/zookeeper/zookeeper/Zookeeper/" class="archive-article-date">
-  	<time datetime="2020-09-15T09:41:04.533Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-09-15</time>
-</a>
-        </div>
-    	 
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/zookeeper/zookeeper/Zookeeper/">zk的基本概念</a>
-    </h1>
-  
-
-        <div class="article-info info-on-right">
-          
-          
-	<div class="article-category tagcloud">
-		<i class="icon-book icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="/categories/zookeeper//" class="article-tag-list-link color5">zookeeper</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-
-        </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
-  
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/springcloud/spring/SpringCloud/" class="archive-article-date">
-  	<time datetime="2020-09-15T09:41:04.522Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-09-15</time>
-</a>
-        </div>
-    	 
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/springcloud/spring/SpringCloud/">springcloud问题随记</a>
-    </h1>
-  
-
-        <div class="article-info info-on-right">
-          
-          
-	<div class="article-category tagcloud">
-		<i class="icon-book icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="/categories/springcloud//" class="article-tag-list-link color2">springcloud</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-
-        </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
-  
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/spring/spring/Spring/" class="archive-article-date">
-  	<time datetime="2020-09-15T09:41:04.510Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-09-15</time>
-</a>
-        </div>
-    	 
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/spring/spring/Spring/">spring问题随记</a>
-    </h1>
-  
-
-        <div class="article-info info-on-right">
-          
-          
-	<div class="article-category tagcloud">
-		<i class="icon-book icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="/categories/spring//" class="article-tag-list-link color2">spring</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-
-        </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
-  
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/rpc/JMS/rpc/rpc%E6%A6%82%E8%BF%B0%E4%B8%8EJMS/" class="archive-article-date">
-  	<time datetime="2020-09-15T09:41:04.454Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-09-15</time>
-</a>
-        </div>
-    	 
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/rpc/JMS/rpc/rpc%E6%A6%82%E8%BF%B0%E4%B8%8EJMS/">rpc概述与JMS</a>
-    </h1>
-  
-
-        <div class="article-info info-on-right">
-          
-          
-	<div class="article-category tagcloud">
-		<i class="icon-book icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="/categories/rpc//" class="article-tag-list-link color4">rpc</a>
-        		</li>
-      		 
-        		<li class="article-tag-list-item">
-        			<a href="/categories/rpc/JMS//" class="article-tag-list-link color4">JMS</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-
-        </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
-  
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/mongodb/nosql/nosql/MongoDB%E5%9F%BA%E7%A1%80/" class="archive-article-date">
-  	<time datetime="2020-09-15T09:41:04.438Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-09-15</time>
-</a>
-        </div>
-    	 
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/mongodb/nosql/nosql/MongoDB%E5%9F%BA%E7%A1%80/">mongodb的部署及基本概念</a>
-    </h1>
-  
-
-        <div class="article-info info-on-right">
-          
-          
-	<div class="article-category tagcloud">
-		<i class="icon-book icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="/categories/mongodb//" class="article-tag-list-link color3">mongodb</a>
-        		</li>
-      		 
-        		<li class="article-tag-list-item">
-        			<a href="/categories/mongodb/nosql//" class="article-tag-list-link color1">nosql</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-
-        </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
-  
-  
-    </div></section>
-  
-
-    
-    <nav id="page-nav">
-      <span class="page-number current">1</span><a class="page-number" href="/archives/page/2/">2</a><a class="page-number" href="/archives/page/3/">3</a><a class="extend next" rel="next" href="/archives/page/2/">Next &amp;raquo;</a>
-    </nav>
   
 
 
@@ -564,8 +399,8 @@
 	var yiliaConfig = {
 		mathjax: false,
 		isHome: false,
-		isPost: false,
-		isArchive: true,
+		isPost: true,
+		isArchive: false,
 		isTag: false,
 		isCategory: false,
 		open_in_new: false,
