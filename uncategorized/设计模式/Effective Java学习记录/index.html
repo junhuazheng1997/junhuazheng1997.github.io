@@ -6,25 +6,19 @@
   <meta name="renderer" content="webkit">
   <meta http-equiv="X-UA-Compatible" content="IE=edge" >
   <link rel="dns-prefetch" href="https://junhuazheng.com">
-  <title>JVM--对象 | 韭菜之光的博客</title>
+  <title>韭菜之光的博客</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="前言： 主要记录了对象创建、内存布局、访问定位的学习笔记">
+  <meta name="description" content="Effective Java学习记录前言： 关于研读Effective Java的一些心得 一、使用静态工厂方法代替构造器1、什么是静态工厂方法例子一：Long.valueOf() 12345678910111213141516171819public static Long valueOf(long l) &amp;#123;    final int offset &#x3D; 128;    if(l &amp;gt">
 <meta property="og:type" content="article">
-<meta property="og:title" content="JVM--对象">
-<meta property="og:url" content="https://junhuazheng.com/JVM/jvm/%E5%88%9D%E6%8E%A2%E5%AF%B9%E8%B1%A1/index.html">
+<meta property="og:title" content="韭菜之光的博客">
+<meta property="og:url" content="https://junhuazheng.com/uncategorized/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/Effective%20Java%E5%AD%A6%E4%B9%A0%E8%AE%B0%E5%BD%95/index.html">
 <meta property="og:site_name" content="韭菜之光的博客">
-<meta property="og:description" content="前言： 主要记录了对象创建、内存布局、访问定位的学习笔记">
+<meta property="og:description" content="Effective Java学习记录前言： 关于研读Effective Java的一些心得 一、使用静态工厂方法代替构造器1、什么是静态工厂方法例子一：Long.valueOf() 12345678910111213141516171819public static Long valueOf(long l) &amp;#123;    final int offset &#x3D; 128;    if(l &amp;gt">
 <meta property="og:locale" content="en_US">
-<meta property="og:image" content="http://118.24.235.151/group1/M00/00/00/rB4AA19MXZKAEwbzAADfkaqI-Mk198.png">
-<meta property="og:image" content="http://118.24.235.151/group1/M00/00/00/rB4AA19OVpOASmzZAADeb_EsdK8340.jpg">
-<meta property="og:image" content="http://118.24.235.151/group1/M00/00/00/rB4AA19OWVuAO32jAADFAfRpuP8577.jpg">
-<meta property="og:image" content="http://118.24.235.151/group1/M00/00/00/rB4AA19OXnSAHr95AAEkHW5D4ZY659.jpg">
-<meta property="og:image" content="http://118.24.235.151/group1/M00/00/00/rB4AA19OZLSAdkY9AAD4HVTnjjY591.jpg">
-<meta property="article:published_time" content="2020-09-16T03:06:39.384Z">
-<meta property="article:modified_time" content="2020-09-16T07:08:08.872Z">
+<meta property="article:published_time" content="2020-09-17T09:21:11.778Z">
+<meta property="article:modified_time" content="2020-09-17T10:01:35.042Z">
 <meta property="article:author" content="Junhua Zheng">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:image" content="http://118.24.235.151/group1/M00/00/00/rB4AA19MXZKAEwbzAADfkaqI-Mk198.png">
   
   
     <link rel="icon" href="/favicon.png">
@@ -144,102 +138,31 @@
             <canvas data-colors="#eaeaea" data-sectionHeight="100" data-contentId="js-content" id="myCanvas1" class="anm-canvas"></canvas>
           </div>
           <div id="js-content" class="content-ll">
-            <article id="post-jvm/初探对象" class="article article-type-post " itemscope itemprop="blogPost">
+            <article id="post-设计模式/Effective Java学习记录" class="article article-type-post " itemscope itemprop="blogPost">
   <div class="article-inner">
-    
-      <header class="article-header">
-        
-  
-    <h1 class="article-title" itemprop="name">
-      JVM--对象
-    </h1>
-  
-
-        
-        <a href="/JVM/jvm/%E5%88%9D%E6%8E%A2%E5%AF%B9%E8%B1%A1/" class="archive-article-date">
-  	<time datetime="2020-09-16T03:06:39.384Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-09-16</time>
-</a>
-        
-      </header>
     
     <div class="article-entry" itemprop="articleBody">
       
-        <p>前言：</p>
-<p>主要记录了对象创建、内存布局、访问定位的学习笔记</p>
-<a id="more"></a>
+        <h1 id="Effective-Java学习记录"><a href="#Effective-Java学习记录" class="headerlink" title="Effective Java学习记录"></a>Effective Java学习记录</h1><p>前言：</p>
+<p>关于研读Effective Java的一些心得</p>
+<h2 id="一、使用静态工厂方法代替构造器"><a href="#一、使用静态工厂方法代替构造器" class="headerlink" title="一、使用静态工厂方法代替构造器"></a>一、使用静态工厂方法代替构造器</h2><h4 id="1、什么是静态工厂方法"><a href="#1、什么是静态工厂方法" class="headerlink" title="1、什么是静态工厂方法"></a>1、什么是静态工厂方法</h4><p><strong>例子一：Long.valueOf()</strong></p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">static</span> Long <span class="title">valueOf</span><span class="params">(<span class="keyword">long</span> l)</span> </span>&#123;</span><br><span class="line">    <span class="keyword">final</span> <span class="keyword">int</span> offset = <span class="number">128</span>;</span><br><span class="line">    <span class="keyword">if</span>(l &gt;= -<span class="number">128</span> &amp;&amp; l &lt;= <span class="number">127</span>)</span><br><span class="line">        <span class="keyword">return</span> LongCache.cache[(<span class="keyword">int</span>)l + offset];</span><br><span class="line">    <span class="keyword">return</span> <span class="keyword">new</span> Long(l);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">private</span> <span class="keyword">static</span> <span class="class"><span class="keyword">class</span> <span class="title">LongCache</span> </span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">private</span> <span class="title">LongCache</span><span class="params">()</span> </span>&#123;&#125; <span class="comment">// 阻止实例化</span></span><br><span class="line">    </span><br><span class="line">    <span class="comment">// 缓存</span></span><br><span class="line">    <span class="keyword">static</span> <span class="keyword">final</span> Long cache[] = <span class="keyword">new</span> Long[-(-<span class="number">128</span>) + <span class="number">127</span> + <span class="number">1</span>];</span><br><span class="line">    </span><br><span class="line">    <span class="comment">// 加载时注册</span></span><br><span class="line">    <span class="keyword">static</span> &#123;</span><br><span class="line">        <span class="keyword">for</span>(<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; cache.length; i++)</span><br><span class="line">            cache[i] = <span class="keyword">new</span> Long(i-<span class="number">128</span>);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
 
 
-<h1 id="初探对象"><a href="#初探对象" class="headerlink" title="初探对象"></a>初探对象</h1><h2 id="一、对象的创建"><a href="#一、对象的创建" class="headerlink" title="一、对象的创建"></a>一、对象的创建</h2><p>​    在语言层面，创建对象通常（复制、反序列化）仅仅是一个new关键字而已，而在虚拟机中，对象（不包括数据、Class对象）的创建时怎么样的呢？</p>
-<p><strong>1、检查</strong></p>
-<p>​        当Java虚拟机遇到一条字节码<code>new</code>指令时，首先将去检查这个指令的参数是否能在<code>常量池</code>中定位到一个类的符号引用，并检查这个符号引用代表的类是否已经被加载、解析和初始化过。如果没有，那必须先执行相应的类加载过程。</p>
-<p><strong>2、类加载</strong></p>
-<blockquote>
-<p>待补充</p>
-</blockquote>
-<p><strong>3、为新生对象分配内存</strong></p>
-<p>​        在类加载检查通过后，接下来虚拟机将为新生对象分配内存。对象所需内存的大小在类加载完成后便可完全确定，为对象分配内存的任务实际上便是等同于把一块确定大小的内存块从Java堆中划分出来。</p>
-<blockquote>
-<p>内存划分方式</p>
-</blockquote>
-<p>​        <code>指针碰撞</code> 假设Java堆中内存是绝对规整的，所有被使用过的内存都被放在一边，空闲的内存被放在另外一边，中间放着一个指针作为分界点的指示器，那所分配内存就仅仅是把那个指针向空闲方向挪动一段与对象大小相等的距离，这种分配方式称为<strong>指针碰撞 Bump The Pointer</strong>。</p>
-<p>​        <code>空闲列表</code> 但如果Java堆中的内存并不是规整的，已被使用的内存和空闲的内存交错在一起，那么就没有办法简单地进行指针碰撞了，虚拟机就必须维护一个列表，记录哪些内存块是可用的，分配的时候从列表中找到一块足够大的空间划分给对象实例，并更新列表上的记录，这种分配方式被称为<strong>空闲列表 FreeList</strong></p>
-<blockquote>
-<p>划分方式选择</p>
-</blockquote>
-<p>​        选择哪种分配方式由Heap是否规整决定，而Heap是否规整又由所采用的垃圾收集器是否带有<strong>空间压缩整理 Compact</strong>的能力决定。因此，当使用<strong>Serial、ParNew</strong>等带有压缩整理过程的收集器时，系统采用的分配算法是指针碰撞，及简单由高效，而当使用<strong>CMS</strong>这种基于<strong>Sweep 清除算法</strong>的收集器时，理论上就只能采用较为复杂的空闲列表来分配内存</p>
-<blockquote>
-<p>内存分配并发问题</p>
-</blockquote>
-<p>​        对象创建在虚拟机中是非常频繁地行为，即使仅仅是修改一个指针指向的位置，在并发的情况下也不是线程安全的，可能出现正在给对象A分配内存，指针还没来得及修改，对象B又同时使用了原来的指针来分配内存的情况。</p>
-<p>​        解决这个问题有两种可选方案：一种是对分配内存空间的动作进行同步处理——实际上虚拟机采用CAS配上失败重试的方式保证更新操作的原子性；另外一种是把内存分配的动作按照线程划分在不同的空间之中进行，即每个线程在Heap中预先分配一小块内存，称为<strong>本地线程分配缓冲 Thread Local Allocation Buffer</strong>，哪个线程要分配内存，就在哪个线程的本地缓冲区中分配，只有本地缓冲区用完了，分配新的缓冲区时才需要同步锁定。（使用方式见命令表）</p>
-<p><strong>4、零值的初始化</strong></p>
-<p>​        内存分配完成之后，虚拟机必须将分配到的内存空间（不包括对象头）都初始化为零值，如果使用了TLAB，这项工作也可以提前至TLAB分配时顺便进行。这步操作保证了对象的实例字段在Java代码中可以不赋予初始值就直接使用，使程序能访问到这些字段的数据类型所对应的零值。</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Test</span> </span>&#123;</span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">static</span> String afterMemoryAllocation;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> </span>&#123;</span><br><span class="line">        System.out.println(afterMemoryAllocation);</span><br><span class="line">        <span class="comment">// 输出 null</span></span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p><strong>例子二：Coupon.newInstance()</strong></p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Coupon</span> </span>&#123;</span><br><span class="line">    </span><br><span class="line">    <span class="comment">// 更好地方式是根据必要条件重写hashCode</span></span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">final</span> Set&lt;String&gt; types = <span class="keyword">new</span> HashSet&lt;&gt;();</span><br><span class="line"></span><br><span class="line">    <span class="comment">// 注册(也可提供注册方法 从数据库获取数据注册)</span></span><br><span class="line">    <span class="keyword">static</span> &#123;</span><br><span class="line">        types.add(<span class="string">&quot;discount&quot;</span>);</span><br><span class="line">        types.add(<span class="string">&quot;convert&quot;</span>);</span><br><span class="line">        ...</span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">final</span> Map&lt;String, Coupon&gt; coupons </span><br><span class="line">        = <span class="keyword">new</span> ConcurrentHashMap&lt;&gt;();</span><br><span class="line"></span><br><span class="line">    <span class="comment">// 静态工厂方法</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> Coupon <span class="title">newInstance</span><span class="params">(String couponType)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">if</span>(types.contains(couponType))</span><br><span class="line">            <span class="keyword">throw</span> <span class="keyword">new</span> IllegalArugmentException(</span><br><span class="line">        <span class="string">&quot;No type registered with name: &quot;</span> + couponType</span><br><span class="line">        );</span><br><span class="line">        <span class="keyword">if</span> coupons.containsKey(couponType)</span><br><span class="line">            <span class="keyword">return</span> coupons.get(couponType);</span><br><span class="line">        Coupon coupon = <span class="keyword">new</span> Coupon();</span><br><span class="line">        coupon.setIsDelete(<span class="number">0</span>);</span><br><span class="line">        coupon.setTypeName(couponType);</span><br><span class="line">        coupon.setIsEnable(<span class="number">0</span>);</span><br><span class="line">        ...</span><br><span class="line">        coupons.put(couponType, coupon);</span><br><span class="line">        <span class="keyword">return</span> coupon;</span><br><span class="line">    &#125;</span><br><span class="line">       </span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
-<p><strong>5、对象信息设置</strong></p>
-<p>​        接下来，Java虚拟机还要对对象进行必要的设置，例如这个对象是那个类的实例、如何才能找到类的元数据信息、对象的哈希码（实际上对象的哈希码会延后到真正调用 <code>Object::hashCode()</code>方法时才计算）、对象的GC分代年龄等信息。这些信息存放在对象的对象头<code>Object Header</code>中。根据虚拟机当前运行状态的不同，如是否启用偏向锁等，对象头会有不同的设置方式。</p>
-<p><strong>6、构造函数的执行</strong></p>
-<p>​        在上面工作都完成之后，从虚拟机的视角来说，一个新的对象已经产生。但是从Java程序的视角看来，对象的创建才刚刚开始——构造函数，即Class文件中的<code>init&lt;&gt;()</code>方法还没有执行，所有的字段都为默认的零值，对象需要的其他资源好状态信息也还没有按照预定的意图构造好。</p>
-<p>​        一般来说（由字节码流中new指令后面是否跟随invokespecial指令决定，Java编译器会在遇到new关键字的地方同时生成两条字节码指令，但如果直接通过其他方式产生的则不一定如此，new指令后接着执行<code>&lt;init&gt;()</code>方法，按照程序员的意愿对对象进行初始化，这样一个真正可用的对象才算完全被构造出来。</p>
-<p><strong>7、总结</strong></p>
-<p><img src="http://118.24.235.151/group1/M00/00/00/rB4AA19MXZKAEwbzAADfkaqI-Mk198.png"></p>
-<h2 id="二、对象的内存布局"><a href="#二、对象的内存布局" class="headerlink" title="二、对象的内存布局"></a>二、对象的内存布局</h2><p>HotSpot虚拟机中，对象在堆内存中的存储布局可以划分为三个部分：</p>
-<ul>
-<li>对象头 Header</li>
-<li>实例数据 Instance Data</li>
-<li>对齐填充 Padding</li>
+
+
+<h4 id="2、为什么静态工厂方法"><a href="#2、为什么静态工厂方法" class="headerlink" title="2、为什么静态工厂方法"></a>2、为什么静态工厂方法</h4><ul>
+<li><p>静态工厂方法可以自定义名称，比起使用构造器创建对象，更容易表达该方法创建的实怎么样的一个对象</p>
+</li>
+<li><p>静态工厂方法可以预先构建实例并缓存起来，进行重复利用，避免创建不必要的重复对象</p>
+</li>
+<li><p>静态工厂方法的返回值可以定义为多个实现的共同父类/接口，即同一个静态工厂方法可以灵活的返回不同的实现。</p>
+</li>
 </ul>
-<p><strong>·1、对象头</strong></p>
-<p>​        HotSpot虚拟机对象的对象头部包括两类信息。第一类是用于存储对象自身的运行时数据，如HashCode、GC分代年龄、锁状态标识、线程持有的锁、偏向线程ID、偏向时间戳等，这部分数据的长度在32位和64位的虚拟机（未开启压缩指针）中分别为32bit和64bit，官方称它未“<strong>Mark Word</strong>”。</p>
-<p>​        对象需要存储的运行时数据很多，其实已经<strong>超出了32、64位Bitmap</strong>结构所能记录的最大限度，但<strong>对象头里的信息是对对象自身定义的数据无关的额外存储成本，考虑到虚拟机的空间效率，Mark Word被设计成一个有着动态定义的数据结构，以便在技校的空间内存储尽量多的数据，根据对象的状态复用自己的存储空间。</strong></p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">比特 BIT</span><br><span class="line">1、bit 信息量单位，二进制数的一位所包含的信息就是一比特，比如二进制数0100就是4比特</span><br><span class="line">2、数字化音响中用电脉冲表达音频信号，“1”代表有脉冲，“0”代表脉冲间隔。如果波形上每个点的信息用四位一组的代码表示，则称4比特，比特数越高，表达模拟信号就越精确，对音频信号还原能力越强。</span><br><span class="line"></span><br><span class="line">位概念</span><br><span class="line">二进制数系统中，每个0或1就是一个位(bit)，位是数据存储的最小单位。其中8bit就称为一个字节（Byte）。计算机中的CPU位数指的是CPU一次能处理的最大位数。例如32位计算机的CPU一次最多能处理32位数据。</span><br></pre></td></tr></table></figure>
-
-<p>​        例如在32位的HotSpot虚拟机中，如对象未被同步锁锁定的状态下，Mark Word的32个比特存储空间中25个比特用于存储对象哈希码，4个比特用于存储对象分代年龄，2个比特用于存储锁标志位，1个比特固定为0，在其他状态（轻量级锁定、重量级锁定、GC标记、可偏向）下，对象的存储内容如下表所示：</p>
-<p><img src="http://118.24.235.151/group1/M00/00/00/rB4AA19OVpOASmzZAADeb_EsdK8340.jpg"></p>
-<p>​        <strong>对象头的另外一部分是类型指针，即对象指向它的类型元数据的指针，Java虚拟机通过这个指针来确定该对象是哪个类的实例。</strong></p>
-<p>​        并不是所有的虚拟机实现都必须在对象数据上保留类型指针，换句话说，查找对象的元数据信息并不一定要经过对象本身。此外，如果对象是一个Java数组，那在对象头中必须还有一块用于记录数组长度的数据，因为虚拟机可以通过普通Java对象的元数据信息来确定Java对象的大小，但是如果数组的长度是不确定的，将无法通过元数据中的信息推断出数组大小。</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">User</span> </span>&#123;</span><br><span class="line">    <span class="keyword">private</span> String userName;</span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">// User[] User数组，虚拟机通过User对象元数据信息和数组长度推断出数组的大小</span></span><br></pre></td></tr></table></figure>
-
-<p><strong>Mark Word存储布局注释片段</strong></p>
-<p><img src="http://118.24.235.151/group1/M00/00/00/rB4AA19OWVuAO32jAADFAfRpuP8577.jpg"></p>
-<p><strong>2、实例数据</strong></p>
-<p>​        实例数据部分是对象真正存储的有效信息，即我们在程序代码里面所定义的各种类型的字段内容，无论是从父类继承下来的，还是在子类中定义的字段都必须记录起来。这部分的存储顺序会受到虚拟机分配策略参数（-XX: FieldsAllocationStyle参数）和字段在Java源码中定义顺序的影响。</p>
-<p>​        HotSpot虚拟机默认的分配顺序为：longs/doubles、ints、shorts/chars、bytes/booleans、oops（Ordinary Object Pointers）普通对象指针，从以上默认的分配策略中可以看到，相同宽度的字段总是被分配到一起存放，在满足这个前提条件的情况下，在父类中定义的变量会出现在子类之前。</p>
-<p>​        如果HotSpot虚拟机的 +XX: CompactFields参数值为true（默认为true），那子类之中较为窄的变量也允许插入父类变量的空隙之中，以节省出一点点空间。</p>
-<p><strong>3、对齐填充</strong></p>
-<p>​        对象的第三部分是对齐填充，对齐填充不是必然存在的，也没有特别的含义，它仅仅起着占位符的作用。由于HotSpot虚拟机的自动内存管理系统要求对象起始地址必须是8字节的整数倍，换句话说就是任何对象的大小都必须是8字节的整数倍。对象头部分已经被精心设计成正好是8字节的倍数（1倍或者2倍），因此，如果对象实例数据部分没有对齐的话，就需要通过对齐填充来补全。</p>
-<h2 id="三、对象的访问定位"><a href="#三、对象的访问定位" class="headerlink" title="三、对象的访问定位"></a>三、对象的访问定位</h2><p>java程序会通过栈上的 reference 数据来操作堆上的具体对象。由于reference类型在《Java虚拟机规范》里面只规定了它是一个指向对象的引用，并没有定义这个引用应该通过什么方式去定位、访问到堆中对象的具体位置，所以对象访问方式也是有虚拟机实现而定的，主流的访问方式主要使用 <strong>句柄和直接指针</strong>两种方式。</p>
-<p><strong>1、句柄访问</strong></p>
-<p>​        使用句柄访问，Java堆中将可能会划分出一块内存来作为句柄池，reference中存储的就是对象的句柄地址，而句柄中包含了对象实例数据与类型数据（对象头包含了到类型数据的指针，部分虚拟机不包含）各自具体的地址信息。</p>
-<p>​        使用句柄访问的最大好处就是 reference 中存储的是稳定句柄地址，在对象被移动（垃圾收集时移动对象是非常普遍的行为）时只会改变句柄中实例数据指针，而reference本身不需要被修改。</p>
-<p><img src="http://118.24.235.151/group1/M00/00/00/rB4AA19OXnSAHr95AAEkHW5D4ZY659.jpg"></p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * JDK7 -- MethodHandle 方法句柄</span></span><br><span class="line"><span class="comment"> * 获取方法句柄示例</span></span><br><span class="line"><span class="comment"> * </span></span><br><span class="line"><span class="comment"> * 使用方法句柄调用方法</span></span><br><span class="line"><span class="comment"> * 1、methodHandle.invokeExact(obj, args); </span></span><br><span class="line"><span class="comment"> * 2、methodHandle.bindTo(obj);methodHandle.invokeWithArguments(args);</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">static</span> MethodHandle <span class="title">getMH</span><span class="params">()</span> </span>&#123;</span><br><span class="line">    Method mt = MethodType.methodType(returnType.class, args.class);</span><br><span class="line">    MethodHandle mh = <span class="keyword">null</span>;</span><br><span class="line">    <span class="keyword">try</span> &#123;</span><br><span class="line">        mh = MethodHandles.lookup().findVirtual(obj.class, <span class="string">&quot;methodName&quot;</span>, mt);</span><br><span class="line">    &#125; catcher(NosuchMethodException | IllegalAccessException e) &#123;</span><br><span class="line">        e.printStackTrace();</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> mh;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<p><strong>2、直接指针访问</strong></p>
-<p>​        使用直接指针访问的话，Java堆对象的内存布局就必须考虑如何放置访问类型数据的相关信息，referenc中存储的直接就是对象地址，如果只是访问对象本身的话，就不需要多一次间接访问的开销。</p>
-<p>​        使用直接指针访问最大的好处就是速度更快，它节省了一次指针定位的时间开销，犹豫对象访问在Java中非常频繁，因此这类开销积少成多也是一项极为可观的执行成本，就本书讨论的主要虚拟机HotSpot而言，它主要使用指针指针访问来访问对象（有例外情况，如果使用了<strong>Shenandoah收集器</strong>的话，也会又一次额外的转发），但从整个软件开发的范围来看，在各种语言、框架中使用句柄来访问的情况也十分常见。</p>
-<p><img src="http://118.24.235.151/group1/M00/00/00/rB4AA19OZLSAdkY9AAD4HVTnjjY591.jpg"></p>
 
       
 
@@ -251,17 +174,6 @@
       
       
       
-	<div class="article-category tagcloud">
-		<i class="icon-book icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="/categories/JVM//" class="article-tag-list-link color4">JVM</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
 
       
 
@@ -311,7 +223,7 @@
     <a class="close js-modal-close" href="javascript:;"><i class="icon icon-close"></i></a>
     <p>扫一扫，分享到微信</p>
     <div class="wx-qrcode">
-      <img src="//pan.baidu.com/share/qrcode?url=https://junhuazheng.com/JVM/jvm/%E5%88%9D%E6%8E%A2%E5%AF%B9%E8%B1%A1/" alt="微信分享二维码">
+      <img src="//pan.baidu.com/share/qrcode?url=https://junhuazheng.com/uncategorized/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/Effective%20Java%E5%AD%A6%E4%B9%A0%E8%AE%B0%E5%BD%95/" alt="微信分享二维码">
     </div>
 </div>
 
@@ -325,18 +237,9 @@
   
 <nav id="article-nav">
   
-    <a href="/uncategorized/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/Effective%20Java%E5%AD%A6%E4%B9%A0%E8%AE%B0%E5%BD%95/" id="article-nav-newer" class="article-nav-link-wrap">
-      <i class="icon-circle-left"></i>
-      <div class="article-nav-title">
-        
-          (no title)
-        
-      </div>
-    </a>
   
-  
-    <a href="/docker/docker/Dockerfile/" id="article-nav-older" class="article-nav-link-wrap">
-      <div class="article-nav-title">Dokerfile实战</div>
+    <a href="/JVM/jvm/%E5%88%9D%E6%8E%A2%E5%AF%B9%E8%B1%A1/" id="article-nav-older" class="article-nav-link-wrap">
+      <div class="article-nav-title">JVM--对象</div>
       <i class="icon-circle-right"></i>
     </a>
   

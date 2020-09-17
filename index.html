@@ -136,6 +136,75 @@
           <div id="js-content" class="content-ll">
             
   
+    <article id="post-设计模式/Effective Java学习记录" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h1 id="Effective-Java学习记录"><a href="#Effective-Java学习记录" class="headerlink" title="Effective Java学习记录"></a>Effective Java学习记录</h1><p>前言：</p>
+<p>关于研读Effective Java的一些心得</p>
+<h2 id="一、使用静态工厂方法代替构造器"><a href="#一、使用静态工厂方法代替构造器" class="headerlink" title="一、使用静态工厂方法代替构造器"></a>一、使用静态工厂方法代替构造器</h2><h4 id="1、什么是静态工厂方法"><a href="#1、什么是静态工厂方法" class="headerlink" title="1、什么是静态工厂方法"></a>1、什么是静态工厂方法</h4><p><strong>例子一：Long.valueOf()</strong></p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">static</span> Long <span class="title">valueOf</span><span class="params">(<span class="keyword">long</span> l)</span> </span>&#123;</span><br><span class="line">    <span class="keyword">final</span> <span class="keyword">int</span> offset = <span class="number">128</span>;</span><br><span class="line">    <span class="keyword">if</span>(l &gt;= -<span class="number">128</span> &amp;&amp; l &lt;= <span class="number">127</span>)</span><br><span class="line">        <span class="keyword">return</span> LongCache.cache[(<span class="keyword">int</span>)l + offset];</span><br><span class="line">    <span class="keyword">return</span> <span class="keyword">new</span> Long(l);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">private</span> <span class="keyword">static</span> <span class="class"><span class="keyword">class</span> <span class="title">LongCache</span> </span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">private</span> <span class="title">LongCache</span><span class="params">()</span> </span>&#123;&#125; <span class="comment">// 阻止实例化</span></span><br><span class="line">    </span><br><span class="line">    <span class="comment">// 缓存</span></span><br><span class="line">    <span class="keyword">static</span> <span class="keyword">final</span> Long cache[] = <span class="keyword">new</span> Long[-(-<span class="number">128</span>) + <span class="number">127</span> + <span class="number">1</span>];</span><br><span class="line">    </span><br><span class="line">    <span class="comment">// 加载时注册</span></span><br><span class="line">    <span class="keyword">static</span> &#123;</span><br><span class="line">        <span class="keyword">for</span>(<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; cache.length; i++)</span><br><span class="line">            cache[i] = <span class="keyword">new</span> Long(i-<span class="number">128</span>);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+
+
+<p><strong>例子二：Coupon.newInstance()</strong></p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Coupon</span> </span>&#123;</span><br><span class="line">    </span><br><span class="line">    <span class="comment">// 更好地方式是根据必要条件重写hashCode</span></span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">final</span> Set&lt;String&gt; types = <span class="keyword">new</span> HashSet&lt;&gt;();</span><br><span class="line"></span><br><span class="line">    <span class="comment">// 注册(也可提供注册方法 从数据库获取数据注册)</span></span><br><span class="line">    <span class="keyword">static</span> &#123;</span><br><span class="line">        types.add(<span class="string">&quot;discount&quot;</span>);</span><br><span class="line">        types.add(<span class="string">&quot;convert&quot;</span>);</span><br><span class="line">        ...</span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">final</span> Map&lt;String, Coupon&gt; coupons </span><br><span class="line">        = <span class="keyword">new</span> ConcurrentHashMap&lt;&gt;();</span><br><span class="line"></span><br><span class="line">    <span class="comment">// 静态工厂方法</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> Coupon <span class="title">newInstance</span><span class="params">(String couponType)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">if</span>(types.contains(couponType))</span><br><span class="line">            <span class="keyword">throw</span> <span class="keyword">new</span> IllegalArugmentException(</span><br><span class="line">        <span class="string">&quot;No type registered with name: &quot;</span> + couponType</span><br><span class="line">        );</span><br><span class="line">        <span class="keyword">if</span> coupons.containsKey(couponType)</span><br><span class="line">            <span class="keyword">return</span> coupons.get(couponType);</span><br><span class="line">        Coupon coupon = <span class="keyword">new</span> Coupon();</span><br><span class="line">        coupon.setIsDelete(<span class="number">0</span>);</span><br><span class="line">        coupon.setTypeName(couponType);</span><br><span class="line">        coupon.setIsEnable(<span class="number">0</span>);</span><br><span class="line">        ...</span><br><span class="line">        coupons.put(couponType, coupon);</span><br><span class="line">        <span class="keyword">return</span> coupon;</span><br><span class="line">    &#125;</span><br><span class="line">       </span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+
+
+<h4 id="2、为什么静态工厂方法"><a href="#2、为什么静态工厂方法" class="headerlink" title="2、为什么静态工厂方法"></a>2、为什么静态工厂方法</h4><ul>
+<li><p>静态工厂方法可以自定义名称，比起使用构造器创建对象，更容易表达该方法创建的实怎么样的一个对象</p>
+</li>
+<li><p>静态工厂方法可以预先构建实例并缓存起来，进行重复利用，避免创建不必要的重复对象</p>
+</li>
+<li><p>静态工厂方法的返回值可以定义为多个实现的共同父类/接口，即同一个静态工厂方法可以灵活的返回不同的实现。</p>
+</li>
+</ul>
+
+      
+
+      
+      
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+      
+
+      
+        <p class="article-more-link">
+          <a class="article-more-a" href="/uncategorized/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/Effective%20Java%E5%AD%A6%E4%B9%A0%E8%AE%B0%E5%BD%95/">展开全文 >></a>
+        </p>
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
+
+  
     <article id="post-jvm/初探对象" class="article article-type-post  article-index" itemscope itemprop="blogPost">
   <div class="article-inner">
     
@@ -395,8 +464,9 @@
     <div class="article-entry" itemprop="articleBody">
       
         <p>前言：</p>
-<p>当接触到的设计模式越来越多，在实际应用中反而无法形容用的是哪种设计模式，代码也越来越混乱，在编码中，如何安全地降低内存的使用，如何利用Java这种动态单分派的特性使代码逻辑更加清晰整洁，离不开设计模式。</p>
-<p>这里主要简单地总结一些设计模式。</p>
+<p>编码一定要风骚</p>
+<p>实践代码 </p>
+<p>Github:  <a target="_blank" rel="noopener" href="https://github.com/junhuazheng1997/learn/tree/master/design-demo">https://github.com/junhuazheng1997/learn/tree/master/design-demo</a></p>
         
           <a class="article-more-a" href="/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/%E5%9B%9E%E9%A1%BE%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/#more">more >></a>
         
@@ -824,89 +894,6 @@
       
         <p class="article-more-link">
           <a class="article-more-a" href="/rpc/JMS/rpc/rpc%E6%A6%82%E8%BF%B0%E4%B8%8EJMS/">展开全文 >></a>
-        </p>
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        
-    </div>
-</aside>
-
-
-
-
-  
-    <article id="post-nosql/MongoDB基础" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/mongodb/nosql/nosql/MongoDB%E5%9F%BA%E7%A1%80/">mongodb的部署及基本概念</a>
-    </h1>
-  
-
-        
-        <a href="/mongodb/nosql/nosql/MongoDB%E5%9F%BA%E7%A1%80/" class="archive-article-date">
-  	<time datetime="2020-09-15T09:41:04.438Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-09-15</time>
-</a>
-        
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <p>前言：</p>
-<p>主要是MongoDB的docker方式部署以及一些基本使用</p>
-        
-          <a class="article-more-a" href="/mongodb/nosql/nosql/MongoDB%E5%9F%BA%E7%A1%80/#more">more >></a>
-        
-      
-
-      
-      
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-      
-	<div class="article-category tagcloud">
-		<i class="icon-book icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="/categories/mongodb//" class="article-tag-list-link color3">mongodb</a>
-        		</li>
-      		 
-        		<li class="article-tag-list-item">
-        			<a href="/categories/mongodb/nosql//" class="article-tag-list-link color1">nosql</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-
-      
-        <p class="article-more-link">
-          <a class="article-more-a" href="/mongodb/nosql/nosql/MongoDB%E5%9F%BA%E7%A1%80/">展开全文 >></a>
         </p>
       
 
