@@ -8,20 +8,17 @@
   <link rel="dns-prefetch" href="https://junhuazheng.com">
   <title>韭菜之光的博客</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="Effective Java学习记录前言： 关于研读Effective Java的一些心得 一、静态工厂方法使用静态工厂方法代替构造器 1、什么是静态工厂方法例子一：Long.valueOf() 12345678910111213141516171819public static Long valueOf(long l) &amp;#123;    final int offset &#x3D; 128;    i">
+  <meta name="description" content="数据结构二叉搜索树概述： ​    二叉查找树 Binary Search Tree，它是一颗空树或具有以下特征 ​    1、若它的左子树不空，则左子树上所有节点的值均小于它的根节点的值； ​    2、若它的右子树不空，则右子树上所有节点的值均大于它的根节点的值； ​    3、它的左、右子树也分别为二叉排序树。">
 <meta property="og:type" content="article">
 <meta property="og:title" content="韭菜之光的博客">
-<meta property="og:url" content="https://junhuazheng.com/uncategorized/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/Effective%20Java%E5%AD%A6%E4%B9%A0%E8%AE%B0%E5%BD%95/index.html">
+<meta property="og:url" content="https://junhuazheng.com/uncategorized/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%E4%B8%8E%E7%AE%97%E6%B3%95/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84/index.html">
 <meta property="og:site_name" content="韭菜之光的博客">
-<meta property="og:description" content="Effective Java学习记录前言： 关于研读Effective Java的一些心得 一、静态工厂方法使用静态工厂方法代替构造器 1、什么是静态工厂方法例子一：Long.valueOf() 12345678910111213141516171819public static Long valueOf(long l) &amp;#123;    final int offset &#x3D; 128;    i">
+<meta property="og:description" content="数据结构二叉搜索树概述： ​    二叉查找树 Binary Search Tree，它是一颗空树或具有以下特征 ​    1、若它的左子树不空，则左子树上所有节点的值均小于它的根节点的值； ​    2、若它的右子树不空，则右子树上所有节点的值均大于它的根节点的值； ​    3、它的左、右子树也分别为二叉排序树。">
 <meta property="og:locale" content="en_US">
-<meta property="og:image" content="http://118.24.235.151/group1/M00/00/00/rB4AA19kIzaAJtlHAABR3SfFyCU222.png">
-<meta property="og:image" content="http://118.24.235.151/group1/M00/00/00/rB4AA19kI4uAAzskAAANQCGE1s0930.png">
-<meta property="article:published_time" content="2020-09-17T09:21:11.778Z">
-<meta property="article:modified_time" content="2020-09-18T10:01:27.793Z">
+<meta property="article:published_time" content="2020-09-21T06:28:47.167Z">
+<meta property="article:modified_time" content="2020-09-21T09:50:15.673Z">
 <meta property="article:author" content="Junhua Zheng">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:image" content="http://118.24.235.151/group1/M00/00/00/rB4AA19kIzaAJtlHAABR3SfFyCU222.png">
   
   
     <link rel="icon" href="/favicon.png">
@@ -141,58 +138,16 @@
             <canvas data-colors="#eaeaea" data-sectionHeight="100" data-contentId="js-content" id="myCanvas1" class="anm-canvas"></canvas>
           </div>
           <div id="js-content" class="content-ll">
-            <article id="post-设计模式/Effective Java学习记录" class="article article-type-post " itemscope itemprop="blogPost">
+            <article id="post-数据结构与算法/数据结构" class="article article-type-post " itemscope itemprop="blogPost">
   <div class="article-inner">
     
     <div class="article-entry" itemprop="articleBody">
       
-        <h1 id="Effective-Java学习记录"><a href="#Effective-Java学习记录" class="headerlink" title="Effective Java学习记录"></a>Effective Java学习记录</h1><p>前言：</p>
-<p>关于研读Effective Java的一些心得</p>
-<h2 id="一、静态工厂方法"><a href="#一、静态工厂方法" class="headerlink" title="一、静态工厂方法"></a>一、静态工厂方法</h2><p>使用静态工厂方法代替构造器</p>
-<h4 id="1、什么是静态工厂方法"><a href="#1、什么是静态工厂方法" class="headerlink" title="1、什么是静态工厂方法"></a>1、什么是静态工厂方法</h4><p><strong>例子一：Long.valueOf()</strong></p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">static</span> Long <span class="title">valueOf</span><span class="params">(<span class="keyword">long</span> l)</span> </span>&#123;</span><br><span class="line">    <span class="keyword">final</span> <span class="keyword">int</span> offset = <span class="number">128</span>;</span><br><span class="line">    <span class="keyword">if</span>(l &gt;= -<span class="number">128</span> &amp;&amp; l &lt;= <span class="number">127</span>)</span><br><span class="line">        <span class="keyword">return</span> LongCache.cache[(<span class="keyword">int</span>)l + offset];</span><br><span class="line">    <span class="keyword">return</span> <span class="keyword">new</span> Long(l);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">private</span> <span class="keyword">static</span> <span class="class"><span class="keyword">class</span> <span class="title">LongCache</span> </span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">private</span> <span class="title">LongCache</span><span class="params">()</span> </span>&#123;&#125; <span class="comment">// 阻止实例化</span></span><br><span class="line">    </span><br><span class="line">    <span class="comment">// 缓存</span></span><br><span class="line">    <span class="keyword">static</span> <span class="keyword">final</span> Long cache[] = <span class="keyword">new</span> Long[-(-<span class="number">128</span>) + <span class="number">127</span> + <span class="number">1</span>];</span><br><span class="line">    </span><br><span class="line">    <span class="comment">// 加载时注册</span></span><br><span class="line">    <span class="keyword">static</span> &#123;</span><br><span class="line">        <span class="keyword">for</span>(<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; cache.length; i++)</span><br><span class="line">            cache[i] = <span class="keyword">new</span> Long(i-<span class="number">128</span>);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-
-
-<p><strong>例子二：Coupon.newInstance()</strong></p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Coupon</span> </span>&#123;</span><br><span class="line">    </span><br><span class="line">    <span class="comment">// 更好地方式是根据必要条件重写hashCode</span></span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">final</span> Set&lt;String&gt; types = <span class="keyword">new</span> HashSet&lt;&gt;();</span><br><span class="line"></span><br><span class="line">    <span class="comment">// 注册(也可提供注册方法 从数据库获取数据注册)</span></span><br><span class="line">    <span class="keyword">static</span> &#123;</span><br><span class="line">        types.add(<span class="string">&quot;discount&quot;</span>);</span><br><span class="line">        types.add(<span class="string">&quot;convert&quot;</span>);</span><br><span class="line">        ...</span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">final</span> Map&lt;String, Coupon&gt; coupons </span><br><span class="line">        = <span class="keyword">new</span> ConcurrentHashMap&lt;&gt;();</span><br><span class="line"></span><br><span class="line">    <span class="comment">// 静态工厂方法</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> Coupon <span class="title">newInstance</span><span class="params">(String couponType)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">if</span>(types.contains(couponType))</span><br><span class="line">            <span class="keyword">throw</span> <span class="keyword">new</span> IllegalArugmentException(</span><br><span class="line">        <span class="string">&quot;No type registered with name: &quot;</span> + couponType</span><br><span class="line">        );</span><br><span class="line">        <span class="keyword">if</span> coupons.containsKey(couponType)</span><br><span class="line">            <span class="keyword">return</span> coupons.get(couponType);</span><br><span class="line">        Coupon coupon = <span class="keyword">new</span> Coupon();</span><br><span class="line">        coupon.setIsDelete(<span class="number">0</span>);</span><br><span class="line">        coupon.setTypeName(couponType);</span><br><span class="line">        coupon.setIsEnable(<span class="number">0</span>);</span><br><span class="line">        ...</span><br><span class="line">        coupons.put(couponType, coupon);</span><br><span class="line">        <span class="keyword">return</span> coupon;</span><br><span class="line">    &#125;</span><br><span class="line">       </span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-
-
-<h4 id="2、为什么静态工厂方法"><a href="#2、为什么静态工厂方法" class="headerlink" title="2、为什么静态工厂方法"></a>2、为什么静态工厂方法</h4><h5 id="优点："><a href="#优点：" class="headerlink" title="优点："></a>优点：</h5><blockquote>
-<p>a、静态工厂方法可以自定义名称，比起使用构造器创建对象，更容易表达该方法创建的实怎么样的一个对象</p>
-</blockquote>
-<blockquote>
-<p>b、静态工厂方法可以预先构建实例并缓存起来，进行重复利用，避免创建不必要的重复对象</p>
-</blockquote>
-<blockquote>
-<p>c、静态工厂方法的返回值可以定义为多个实现的共同父类/接口，即同一个静态工厂方法可以灵活的返回不同的实现。</p>
-</blockquote>
-<blockquote>
-<p>d、使用静态工厂方法获取参数化类型实例，往往仅需要一行代码。</p>
-</blockquote>
-<h5 id="缺点"><a href="#缺点" class="headerlink" title="缺点"></a>缺点</h5><blockquote>
-<p>a、当一个类的实例使用静态工厂方法提供，此时构造器通常会进行访问控制，而增加了访问控制，该类将无法以继承的方式使用，而只能使用组合。</p>
-</blockquote>
-<p>例子：</p>
-<p>父类</p>
-<p><img src="http://118.24.235.151/group1/M00/00/00/rB4AA19kIzaAJtlHAABR3SfFyCU222.png"></p>
-<p>子类</p>
-<p><img src="http://118.24.235.151/group1/M00/00/00/rB4AA19kI4uAAzskAAANQCGE1s0930.png"></p>
-<blockquote>
-<p>b、目前的Javadoc工具无法区分静态方法与静态工厂方法</p>
-</blockquote>
-<h4 id="3、静态工厂方法标准命名"><a href="#3、静态工厂方法标准命名" class="headerlink" title="3、静态工厂方法标准命名"></a>3、静态工厂方法标准命名</h4><p><strong><em>valueOf</em></strong> </p>
-<p>该方法返回的实例与它的参数具有相同的值。实际上是类型转换方法。</p>
-<p><strong><em>of</em></strong></p>
-<p>valueOf的更为简洁的替代</p>
-<p><strong><em>getInstance</em></strong></p>
-<p>通过参数返回实例，在单例下则无需参数，返回唯一实例</p>
-<p><strong><em>newInstance</em></strong></p>
-<p>与getInstance相同，返回的实例每次不同</p>
-<p><strong><em>getType</em></strong> / <strong><em>newType</em></strong></p>
-<p>参考getInstance与newInstance，Type表示工厂方法锁返回的对象类型</p>
-<h2 id="二、构建器"><a href="#二、构建器" class="headerlink" title="二、构建器"></a>二、构建器</h2><p>当类的实例化需要提供多个构造器以赋值大量的变量时，考虑使用构建器</p>
+        <h1 id="数据结构"><a href="#数据结构" class="headerlink" title="数据结构"></a>数据结构</h1><h2 id="二叉搜索树"><a href="#二叉搜索树" class="headerlink" title="二叉搜索树"></a>二叉搜索树</h2><p>概述：</p>
+<p>​    二叉查找树 Binary Search Tree，它是一颗空树或具有以下特征</p>
+<p>​    1、若它的左子树不空，则左子树上所有节点的值均小于它的根节点的值；</p>
+<p>​    2、若它的右子树不空，则右子树上所有节点的值均大于它的根节点的值；</p>
+<p>​    3、它的左、右子树也分别为二叉排序树。 </p>
 
       
 
@@ -253,7 +208,7 @@
     <a class="close js-modal-close" href="javascript:;"><i class="icon icon-close"></i></a>
     <p>扫一扫，分享到微信</p>
     <div class="wx-qrcode">
-      <img src="//pan.baidu.com/share/qrcode?url=https://junhuazheng.com/uncategorized/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/Effective%20Java%E5%AD%A6%E4%B9%A0%E8%AE%B0%E5%BD%95/" alt="微信分享二维码">
+      <img src="//pan.baidu.com/share/qrcode?url=https://junhuazheng.com/uncategorized/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%E4%B8%8E%E7%AE%97%E6%B3%95/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84/" alt="微信分享二维码">
     </div>
 </div>
 
@@ -267,18 +222,9 @@
   
 <nav id="article-nav">
   
-    <a href="/uncategorized/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%E4%B8%8E%E7%AE%97%E6%B3%95/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84/" id="article-nav-newer" class="article-nav-link-wrap">
-      <i class="icon-circle-left"></i>
-      <div class="article-nav-title">
-        
-          (no title)
-        
-      </div>
-    </a>
   
-  
-    <a href="/JVM/jvm/%E5%88%9D%E6%8E%A2%E5%AF%B9%E8%B1%A1/" id="article-nav-older" class="article-nav-link-wrap">
-      <div class="article-nav-title">JVM--对象</div>
+    <a href="/uncategorized/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/Effective%20Java%E5%AD%A6%E4%B9%A0%E8%AE%B0%E5%BD%95/" id="article-nav-older" class="article-nav-link-wrap">
+      <div class="article-nav-title"></div>
       <i class="icon-circle-right"></i>
     </a>
   
